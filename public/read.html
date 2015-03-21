@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap 101 Template</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.min.js"></script>
+      <script src="js/respond.min.js"></script>
+    <![endif]-->
+
+    <style>
+      .grey{
+        background-color: #ccc;
+        padding: 20px;
+      }
+    </style>
+  </head>
+
+  <div class = "navbar navbar-inverse">
+      <div class = "container">
+        <a  href = "http://www.google.com" class = "navbar-brand">Online Market</a>
+
+        <button class = "navbar-toggle" data-toggle = "collapse" data-target = ".navHeaderCollapse">
+          <span class = "icon-bar"></span>
+          <span class = "icon-bar"></span>
+          <span class = "icon-bar"></span>
+        </button>
+
+        <div class = "collapse navbar-collapse navHeaderCollapse">
+          <ul class = "nav navbar-nav navbar-right">
+            <li class = "active"><a href="#">Home</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#contact" data-toggle = "modal">Contact</a></li>
+            <li class = "dropdown">
+              <a href = "#" class = "dropdown-toggle" data-toggle = "dropdown">Programming <b class = "caret"></b></a>
+              <ul class = "dropdown-menu">
+                <li><a href="#">Java</a></li>
+                <li><a href="#">Sql</a></li>
+                <li><a href="#">Android</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+
+  <div class = "container">
+    <div class = "row">
+       <div class = "col-lg-3">
+         <div class = "panel panel-default">
+            <div class = "panel-body" style = "height:150px">
+              <div class = "page-header">
+                <h4>House in Ilidza </br><small>Poseted on July 26th</small></h4>
+              </div>
+                <img class = "featuredImg" src="img/house.jpg" width = "100%" height = "100%">
+                <p>Nunc nec nulla non tellus interdum auctor eu eu orci. Donec vel interdum ante. Ut elementum mollis lacus, et accumsan eros accumsan ac. Nam vel vestibulum ipsum. Praesent id erat id mi consequat sollicitudin. Aliquam eu mi vitae odio interdum tincidunt at nec ex. Cras quis pulvinar leo.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class = "col-lg-3">
+         <div class = "panel panel-default">
+            <div class = "panel-body" style = "height:150px">
+              <div class = "page-header">
+                <h4> Iphone 6 </br><small>Poseted on July 26th</small></h4>
+              </div>
+                <img class = "featuredImg" src="img/iphone.jpg" width = "100%" height = "100%">
+                <p>Nunc nec nulla non tellus interdum auctor eu eu orci. Donec vel interdum ante. Ut elementum mollis lacus, et accumsan eros accumsan ac. Nam vel vestibulum ipsum. Praesent id erat id mi consequat sollicitudin. Aliquam eu mi vitae odio interdum tincidunt at nec ex. Cras quis pulvinar leo.</p>
+          </div>
+        </div>
+      </div>
+
+    <div class = "col-lg-3">
+         <div class = "panel panel-default">
+            <div class = "panel-body" style = "height:150px">
+              <div class = "page-header">
+                <h4>New HP laptop </br><small>Poseted on July 26th</small></h4>
+              </div>
+                <img class = "featuredImg" src="img/laptop.jpg" width = "100%" height = "100%">
+                <p>Nunc nec nulla non tellus interdum auctor eu eu orci. Donec vel interdum ante. Ut elementum mollis lacus, et accumsan eros accumsan ac. Nam vel vestibulum ipsum. Praesent id erat id mi consequat sollicitudin. Aliquam eu mi vitae odio interdum tincidunt at nec ex. Cras quis pulvinar leo.</p>
+          </div>
+        </div>
+      </div>
+
+    <div class = "col-lg-3">
+      <div class = "list-group">
+        <a href="#" class = "list-group-item active">Popular</a>
+        <a href="#" class = "list-group-item ">Houses</a>
+        <a href="#" class = "list-group-item">Cars</a>
+        <a href="#" class = "list-group-item">Computers</a>
+      </div>
+    </div>
+
+    </div>
+  </div>
+
+    <div class = "navbar navbar-default navbar-fixed-bottom">
+      <div class = "container">
+        <p class = "navbar-text pull-left" >Site Build by GENTech</p>
+        <a class = "navbar-btn btn-danger btn pull-right " >Aubscribe me</a>
+      </div>
+    </div>
+
+  <div class = "modal fade" id = "contact" role = "dialog">
+    <div class  = "modal-dialog">
+      <div class = "modal-content">
+        <div class = "modal-header">
+          <p>Contact Pazar.ba team</p>
+          </div>
+
+          <div class = "modal-body">
+
+            <form class = "form-horizontal">
+              <div class="form-group">
+                <label for="text_name" class="col-lg-2 control-label">Name</label>
+                <div class="col-lg-10">
+                  <input type="text" class="form-control" id="text_name" placeholder="Your Name">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="inputEmail3" class="col-lg-2 control-label">Email</label>
+                <div class="col-lg-10">
+                  <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+                </div>
+              </div>
+
+              <form class = "form-horizontal">
+              <div class="form-group">
+                <label for="subject" class="col-lg-2 control-label">Subject</label>
+                <div class="col-lg-10">
+                  <input type="text" class="form-control" id="subject" placeholder="Message Subject">
+                </div>
+              </div>
+
+              <form class = "form-horizontal">
+              <div class="form-group">
+                <label for="message" class="col-lg-2 control-label">Message</label>
+                <div class="col-lg-10">
+                  <textarea class="form-control" rows="5" id = "message" placeholder = "Message..."></textarea>
+                </div>
+              </div>
+
+            </form>
+
+          </div>
+          <div class = "modal-footer">
+            <button class = "btn btn-primary" type = "submit">Submit</button>
+            <a class = "btn btn-default" data-dismiss = "modal">Close</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  <body>
+
+   
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+  </body>
+</html>
