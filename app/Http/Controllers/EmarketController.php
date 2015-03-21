@@ -33,4 +33,8 @@ class EmarketController extends Controller {
 		return view('emarket.index');
 	}
 
+	public function addproduct(){
+		return view('emarket.addproduct');
+	}
+
 }

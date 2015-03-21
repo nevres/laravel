@@ -71,12 +71,13 @@
 	</nav>
 
 	<div class = "container" id = "search_container">
-		<form class="navbar-form navbar-left" role="search">
-		    <div class="form-group">
-		        <input type="text" class="form-control" placeholder="Search">
-		    </div>
-		    <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
-		</form>
+		<div class="navbar-form navbar-left" role="search">
+		    <form class="form-group">
+		        <input type="text" class="form-control" placeholder="Search for product. Example: iPhone 6" style = "width:400px" >
+		    	<button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
+			</form>
+		<a href="/addproduct"><button type="submit" class="btn btn-primary" style = "margin-left:35px">Add a Product</button></a>
+		</div>
 	</div>
 
  <div class = "container">

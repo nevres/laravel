@@ -36,6 +36,20 @@
 						</div>
 
 						<div class="form-group">
+							<label class="col-md-4 control-label">First Name</label>
+							<div class="col-md-6">
+								<input type="text" class="form-control" name="first_name" value="{{ old('first_name') }}">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-md-4 control-label">Second Name</label>
+							<div class="col-md-6">
+								<input type="text" class="form-control" name="second_name" value="{{ old('second_name') }}">
+							</div>
+						</div>
+
+						<div class="form-group">
 							<label class="col-md-4 control-label">Password</label>
 							<div class="col-md-6">
 								<input type="password" class="form-control" name="password">
@@ -46,7 +60,6 @@
 							<label class="col-md-4 control-label">Confirm Password</label>
 							<div class="col-md-6">
 								<input type="password" class="form-control" name="password_confirmation">
-								<!--hello to commit-->
 							</div>
 						</div>
 
@@ -63,4 +76,5 @@
 		</div>
 	</div>
 </div>
+
 @endsection
