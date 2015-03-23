@@ -1,6 +1,7 @@
 <?php
 
 use App\User;
+use App\Product;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,6 +29,22 @@ Route::POST('auth/login', function(){
 		return Redirect::to('/');
 	}else
 		echo'Not Successfull';
+});
+
+Route::POST('addproduct', function(){
+	$productData = array(
+			'name' => Input::get('name'),
+			'price' =>Input::get('price'),
+			'stock' => Input::get('stock'),
+			'isItNew' => Input::get('second_name'),
+			'moneyRetrieve' => Input::get('moneyRetrieve'),
+			'shortDescription' => Input::get('shortDescription'),
+			'longDescription' => Input::get('longDescription'),
+		);
+		$product = new Product($productData);
+		$product->save();
+
+		return Redirect::to('/');
 });
 
 Route::POST('auth/register', function(){
