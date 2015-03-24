@@ -1,5 +1,13 @@
 <?php namespace App\Http\Controllers;
 
+use App\User;
+use App\Product;
+use Illuminate\Support\Facades\Request;
+use Auth;
+use Redirect;
+use Input;
+
+
 class EmarketController extends Controller {
 
 	/*
@@ -39,31 +47,47 @@ class EmarketController extends Controller {
 
 	public function addproductpost(){
 
-		if(Input::get('isItNew') === 'yes')
-			 	$isItNew = true;
-			 else
-			 	$isItNew = false;
+	$validation = Product::validate(Input::all());
 
-			 	if(Input::has('moneyRetrieve'))
-			 	$moneyRetrieve =true;
-			 else
-			 	$moneyRetrieve=false;
+	if ($validation->fails()) {
+		//with_input saves already saved data
+		return Redirect::to('addproduct')->withErrors($validation)->withInput();
+	}else{
 
-		$productData = array(
-			'name' => Input::get('productName'),
-			'price' =>Input::get('price'),
-		    'grade' => 0,
-		    'views' => 0,
-			 $isItNew,
-			 $moneyRetrieve,
-			'stock' => Input::get('stock'),
-			'shortDescription' => Input::get('shortDescription'),
-			'longDescription' => Input::get('longDescription'),
+	if(Request::has('isItNew')){
+		$isItNew = 1;
+	}else{
+		$isItNew = 0;}
+
+	if(Request::has('moneyRetreive')){
+		$moneyRetreive = 1;
+	}else{
+		$moneyRetreive = 0;}
+
+	if(Request::has('pictures')){
+	$file = Input::file('pictures');
+	$destinationPath = base_path().'/public/img';
+	$filename = $file->getClientOriginalName();
+	$realPath = $destinationPath.$filename;
+	Input::file('pictures')->move($destinationPath, $filename);
+	}	
+
+	$productData = array(
+			'name' => Request::get('name'),
+			'userId' => Auth::user()->id,
+			'price' =>Request::get('price'),
+			'stock' => Request::get('stock'),
+			'isItNew' =>$isItNew,
+			'moneyRetreive' =>$moneyRetreive,
+			'shortDesc' => Request::get('shortDescription'),
+			'pictures' => base_path().'/public/img'.Request::file('pictures')->getClientOriginalName(),
+			'longDesc' => Request::get('longDescription'),
 		);
-
 		$product = new Product($productData);
 		$product->save();
 
 		return Redirect::to('/');
+
 	}
+}
 }
