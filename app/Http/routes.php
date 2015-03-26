@@ -16,10 +16,14 @@ use App\Product;
 Route::get('/', 'EmarketController@index');
 Route::POST('addproduct', 'EmarketController@addproductpost');
 Route::GET('addproduct', 'EmarketController@addproduct');
+Route::Get('addproperty', 'EmarketController@addproperty');
+Route::POST('addproperty', 'EmarketController@addpropertypost');
+Route::POST('executeSearch', array('uses' => 'EmarketController@executeSearch'));
+
 Route::get('home', 'HomeController@index');
 
 
-/*Route::POST('auth/login', function(){
+Route::POST('auth/login', function(){
 	$userdata = array(
 		'email' => Input::get('email'),
 		'password' => Input::get('password')
@@ -30,45 +34,6 @@ Route::get('home', 'HomeController@index');
 	}else
 		echo'Not Successfull';
 });
-
-	Route::POST('addproduct', function(){
-
-	if(Input::has('isItNew')){
-		$isItNew = 1;
-	}else{
-		$isItNew = 0;}
-
-	if(Input::has('moneyRetreive')){
-		$moneyRetreive = 1;
-	}else{
-		$moneyRetreive = 0;}
-
-	
-	$file = Input::file('pictures');
-	$destinationPath = base_path().'/public/img';
-	$filename = $file->getClientOriginalName();
-	$realPath = $destinationPath.$filename;
-	Input::file('pictures')->move($destinationPath, $filename);
-	
-
-	$productData = array(
-			'name' => Input::get('name'),
-			'userId' => Auth::user()->id,
-			'price' =>Input::get('price'),
-			'stock' => Input::get('stock'),
-			'isItNew' =>$isItNew,
-			'moneyRetreive' =>$moneyRetreive,
-			'shortDesc' => Input::get('shortDescription'),
-			'pictures' => base_path().'/public/img'.Input::file('pictures')->getClientOriginalName(),
-			'longDesc' => Input::get('longDescription'),
-		);
-		$product = new Product($productData);
-		$product->save();
-
-		return Redirect::to('/');
-});
-
-*/
 
 Route::POST('auth/register', function(){
 	$userdata = array(

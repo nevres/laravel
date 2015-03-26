@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,6 +11,79 @@
   <!-- Fonts -->
   <link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
 
+
+  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAb6SpL1HaxqNtEkzL39GUhdZq5udws7HY&sensor=false"></script>
+
+<script>
+  $(window).resize(function () {
+    var h = $(window).height(),
+        offsetTop = 60; // Calculate the top offset
+
+    $('#map-canvas').css('height', (h - offsetTop));
+}).resize();
+</script>
+
+<script>
+
+var map = null;
+var marker = null;
+
+var infowindow = new google.maps.InfoWindow(
+  { 
+    size: new google.maps.Size(150,50)
+  });
+
+
+function createMarker(latlng, name, html) {
+    var contentString = html;
+    var marker = new google.maps.Marker({
+        position: latlng,
+        map: map,
+        zIndex: Math.round(latlng.lat()*-100000)<<5
+        });
+
+    google.maps.event.addListener(marker, 'click', function() {
+        infowindow.setContent(contentString); 
+        infowindow.open(map,marker);
+        });
+    google.maps.event.trigger(marker, 'click');    
+    return marker;
+}
+
+
+function initialize() {
+ 
+var mapOptions = {
+    zoom: 8,
+    center: new google.maps.LatLng(43.8551771, 18.4138047),
+    mapTypeControl: true,
+    mapTypeControlOptions: {style: google.maps.MapTypeControlStyle.DROPDOWN_MENU},
+    navigationControl: true,
+    mapTypeId: google.maps.MapTypeId.ROADMAP
+
+  };
+  map = new google.maps.Map(document.getElementById('map-canvas'),
+      mapOptions);
+
+
+google.maps.event.addListener(map, 'click', function(event) {
+  //call function to create marker
+         if (marker) {
+            marker.setMap(null);
+            marker = null;
+         }
+  marker = createMarker(event.latLng, "name", "<b>Location</b><br>"+event.latLng);
+
+  document.getElementById("lat").value = event.latLng.lat();
+  document.getElementById("long").value = event.latLng.lng();
+  });
+   }
+
+
+
+</script>
+
+
   <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -20,13 +92,6 @@
   <![endif]-->
 
   <style>
-    img {
-      display: block;
-      max-width:230px;
-      max-height:95px;
-      width: auto;
-      height: auto;
-  } 
 
   #search_container
   {
@@ -34,9 +99,17 @@
 
   }
 
+  #map-canvas {
+    width:80%;
+    height:350px;
+    margin-bottom: 25px;
+    float:center;
+}
+
 </style>
+
 </head>
-<body>
+<body onload="initialize()">
   <nav class="navbar navbar-default">
     <div class="container-fluid">
       <div class="navbar-header">
@@ -72,13 +145,24 @@
   </nav>
 
 <div class = "container">
-<form class="form-horizontal" role="form" method="POST" action="/addproduct">
+
+@if ($errors->has())
+        <div class="alert alert-danger">
+            @foreach ($errors->all() as $error)
+                {{ $error }}<br>        
+            @endforeach
+        </div>
+@endif
+
+ <div class = "row">
+      <div class = "col-lg-6">
+          <form class="form-horizontal" role="form" method="POST" action= @yield('address') enctype="multipart/form-data">
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
             <div class="form-group">
               <label class="col-md-4 control-label">Product Name</label>
               <div class="col-md-6">
-                <input type="text" class="form-control" name="productName">
+                <input type="text" class="form-control" name="name">
               </div>
             </div>
 
@@ -100,7 +184,7 @@
               <div class="col-md-6 col-md-offset-4">
                 <div class="checkbox">
                   <label>
-                    <input type="checkbox" name="isItNew">Is It New ? </label>
+                    <input type="checkbox" value = "0" name="isItNew">Is It New ? </label>
                 </div>
               </div>
             </div>
@@ -109,7 +193,7 @@
               <div class="col-md-6 col-md-offset-4">
                 <div class="checkbox">
                   <label>
-                    <input type="checkbox" name="moneyRetrieve">Money Retrieve ? </label>
+                    <input type="checkbox" value= "0"  name="moneyRetreive">Money Retrieve ? </label>
                 </div>
               </div>
             </div>
@@ -121,11 +205,18 @@
               </div>
             </div>
 
-
             <div class="form-group">
               <label class="col-md-4 control-label">Long Description</label>
               <div class="col-md-6">
                 <input type="text" class="form-control" name="longDescription">
+              </div>
+            </div>
+
+            @yield('data')
+
+             <div class="form-group">
+              <div class="col-md-6 col-md-offset-4">
+                <input type="file" name = "pictures" >
               </div>
             </div>
 
@@ -136,8 +227,16 @@
                 </button>
               </div>
             </div>
+
           </form>
         </div>
+
+         <div class = "col-lg-6">
+          <label class="control-label" style = "margin-bottom: 25px">Please mark location of property</label>
+      <div id="map-canvas"></div>
+      </div>
+    </div>
+  </div>
 
   <!-- Scripts -->
   <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
