@@ -15,8 +15,9 @@ function up(){
 			$.post('http://laravel2.dev/executeSearch', {keywords: keywords}, function(result){
 				$('#searchResult').html(result);
 			});
-		}
-	}, 500);
+		}else
+			$('#searchResult').html('');
+	}, 150);
 }
 function down(){
 	clearTimeout(timer);

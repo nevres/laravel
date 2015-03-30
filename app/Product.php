@@ -4,7 +4,7 @@ use Illuminate\Database\Eloquent\Model as Eloquent;
 use Validator;
 
 class Product extends Eloquent{
-	protected $fillable = ['id', 'userId', 'name','shortDesc', 'longDesc', 'price', 'grade','stock', 'isItNew', 'date', 'moneyRetreive', 'shordDesc', 'longdesc', 'grade', 'pictures' ];
+	protected $fillable = ['id', 'userId', 'name','shortDesc', 'longDesc', 'price', 'grade','stock', 'isItNew', 'date', 'moneyRetreive', 'shordDesc', 'longdesc', 'grade', 'pictures', 'type' ];
 	public $timestamps = false;
 
 	public static $rules = array(

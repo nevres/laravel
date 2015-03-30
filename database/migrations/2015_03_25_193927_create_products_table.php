@@ -28,7 +28,6 @@ class CreateProductsTable extends Migration {
 			$table->string('longDesc')->default('No description');
 			$table->string('pictures');
 			$table->integer('type')->unsigned();
-			#$table->primary('id');
 			$table->foreign('userId')->references('id')->on('users');
 			$table->foreign('type')->references('id')->on('types');
 		});

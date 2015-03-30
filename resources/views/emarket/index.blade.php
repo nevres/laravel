@@ -35,6 +35,7 @@
 
   }
 
+
   </style>
 </head>
 <body>
@@ -83,64 +84,47 @@
     </div>
   </div>
 
- <div class = "container">
-	<div class = "col-lg-3">
-         <div class = "panel panel-default">
-            <div class = "panel-body" style = "height:450">
-              <div class = "page-header">
-                <h4>House in Ilidza </br><small>Poseted on July 26th</small></h4>
-              </div>
-                <img class = "featuredImg" src="img/house.jpg">
-                <p>Nunc nec nulla non tellus interdum auctor eu eu orci. Donec vel interdum ante. Ut elementum mollis lacus, et accumsan eros accumsan ac. Nam vel vestibulum ipsum. Praesent id erat id mi consequat sollicitudin. Aliquam eu mi vitae odio interdum tincidunt at nec ex. Cras quis pulvinar leo.</p>
-          </div>
-        </div>
-      </div>
 
-      <div class = "col-lg-3">
-         <div class = "panel panel-default" style = "height:450">
-            <div class = "panel-body">
-              <div class = "page-header">
-                <h4> Iphone 6 </br><small>Poseted on July 26th</small></h4>
-              </div>
-                <img class = "featuredImg" src="img/iphone.jpg">
-                <p>Nunc nec nulla non tellus interdum auctor eu eu orci. 
-                	Donec vel interdum ante. Ut elementum mollis lacus, 
-                	et accumsan eros accumsan ac. Nam vel vestibulum ipsum. 
-                	Praesent id erat id mi consequat sollicitudin. Aliquam 
-                	eu mi vitae odio interdum tincidunt at nec ex. Cras quis pulvinar leo.</p>
-          </div>
-        </div>
-      </div>
-
+  <div class = "col-lg-9">
+  @foreach($products as $product)
     <div class = "col-lg-3">
-         <div class = "panel panel-default">
-            <div class = "panel-body" style = "height:450">
-              <div class = "page-header">
-                <h4>New HP laptop </br><small>Poseted on July 26th</small></h4>
+           <div class = "panel panel-default">
+              <div class = "panel-heading">
+                  <!--
+                  To use later to put a link to every item
+                  <a href = "/{{$product->id}}"-->
+                  <h4>{{$product->name}}</br><small>Poseted on {{substr($product->date, 0, 10)}}</small></h4>
               </div>
-                <img class = "featuredImg" src="img/laptop.jpg">
-                <p>Nunc nec nulla non tellus interdum auctor eu eu orci. Donec vel interdum ante. Ut elementum mollis lacus, et accumsan eros accumsan ac. Nam vel vestibulum ipsum. Praesent id erat id mi consequat sollicitudin. Aliquam eu mi vitae odio interdum tincidunt at nec ex. Cras quis pulvinar leo.</p>
+              <div class = "panel-body">
+                  <p><b>Price:</b> {{$product->price}}</br>
+                     <b>Views:</b> {{$product->views}}
+                  </p>
+                  <img class = "featuredImg" src= {{substr($product->pictures, 27, strlen($product->pictures))}}>
+                  <p>{{$product->shortDesc}}</p>
+                </div>
           </div>
         </div>
-      </div>
+  @endforeach
+</div>
 
-<div class = "col-lg-3">
+
+<div class = "col-lg-3" style = "float:right">
       <div class = "list-group">
-        <a href="#" class = "list-group-item active">Popular</a>
-        <!--for popular implement as home page to drag most popular from all categories from database-->
-        <a href="#" class = "list-group-item ">Properties</a>
-        <a href="#" class = "list-group-item">Mobile Phones</a>
-        <a href="#" class = "list-group-item">Computers</a>
-        <a href="#" class = "list-group-item">Clothes</a>
-        <a href="#" class = "list-group-item">Electronics</a>
-        <a href="#" class = "list-group-item">Sport Equipement</a>
-        <a href="#" class = "list-group-item">Art</a>
-        <a href="#" class = "list-group-item">Animals</a>
-        <a href="#" class = "list-group-item">My Home and Gardenn</a>
-        <a href="#" class = "list-group-item">Jewerly and Watches</a>
+        <a href="/" class = "list-group-item active">Popular</a>
+        <a href="/0" class = "list-group-item ">Properties</a>
+        <a href="/1" class = "list-group-item">Mobile Phones</a>
+        <a href="/2" class = "list-group-item">Computers</a>
+        <a href="/3" class = "list-group-item">Clothes</a>
+        <a href="/4" class = "list-group-item">Electronics</a>
+        <a href="/5" class = "list-group-item">Sport Equipement</a>
+        <a href="/6" class = "list-group-item">Art</a>
+        <a href="/7" class = "list-group-item">Animals</a>
+        <a href="/8" class = "list-group-item">My Home and Gardenn</a>
+        <a href="/9" class = "list-group-item">Jewerly and Watches</a>
       </div>
     </div>
-</div>
+
+
 
   <!-- Scripts -->
   <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>

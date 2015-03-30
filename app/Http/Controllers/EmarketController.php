@@ -3,6 +3,7 @@
 use App\User;
 use Eloquent;
 use App\Property;
+use App\Phone;
 use App\Product;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Str;
@@ -42,8 +43,10 @@ class EmarketController extends Controller {
 	 * @return Response
 	 */
 	public function index()
-	{
-		return view('emarket.index');
+	{	
+		$products = Product::orderBy('views', 'desc')->take(10)->get();
+
+		return view('emarket.index')->with('products', $products);
 	}
 
 	public function inputHas($name){
@@ -108,23 +111,21 @@ class EmarketController extends Controller {
 		return Redirect::to('addproperty')->withErrors($validationProperty)->withInput();
 	}else{
 
-		if(Request::has('pictures')){
-		$file = Input::file('pictures');
-		$destinationPath = base_path().'/public/img';
-		$filename = $file->getClientOriginalName();
-		$realPath = $destinationPath.$filename;
-		Input::file('pictures')->move($destinationPath, $filename);
-		}
+			$file = Input::file('pictures');
+			$destinationPath = base_path().'/public/img';
+			$filename = $file->getClientOriginalName();
+			Input::file('pictures')->move($destinationPath, $filename);	
 
 		$productData = array(
 				'name' => Request::get('name'),
+				'type' => 0,
 				'userId' => Auth::user()->id,
 				'price' =>Request::get('price'),
 				'stock' => Request::get('stock'),
 				'isItNew' =>$this->inputHas('isItNew'),
 				'moneyRetreive' =>$this->inputHas('moneyRetreive'),
 				'shortDesc' => Request::get('shortDescription'),
-				'pictures' => base_path().'/public/img'.Request::file('pictures')->getClientOriginalName(),
+				'pictures' => base_path().'/public/img/'.Request::file('pictures')->getClientOriginalName(),
 				'longDesc' => Request::get('longDescription'),
 				/*floor rooms kmFromCityCenter internet furniture telephone water cableTv garden airConditioning parking fence*/
 
@@ -133,11 +134,12 @@ class EmarketController extends Controller {
 			$product = new Product($productData);
 			$product->save();
 
+			$findId = Product::where('name', Request::get('name'))->first();
+			$productId = $findId->id;
 
 
 		$propertyData = array(
-				'type' => 0,
-				'productId' => 1,
+				'productId' => $productId,
 				'floor' => Request::get('floor'),
 				'rooms' =>Request::get('rooms'),
 				'stock' => Request::get('stock'),
@@ -177,5 +179,88 @@ class EmarketController extends Controller {
 			}
 		}
 		return View::make('emarket.foundproducts')->with('foundProducts', $foundProducts);
+	}
+
+	public function addphone(){
+		return view('emarket.addphone');
+	}
+
+	public function addphonepost(){
+
+		$validationProperty = Phone::validate(Input::all());
+		$validation = Product::validate(Input::all());
+
+		if ($validation->fails()) {
+			//with_input saves already saved data
+			return Redirect::to('addphone')->withErrors($validation)->withInput();
+		}else if($validationProperty->fails()){
+			return Redirect::to('addphone')->withErrors($validationProperty)->withInput();
+		}else{
+
+			$this->storeProduct(1);
+
+			$findId = Product::where('name', Request::get('name'))->first();
+			$productId = $findId->id;
+
+			$propertyData = array(
+				'productId' => $productId,
+				'color' => Request::get('color'),
+				'screenResolution' => Request::get('screenResolution'),
+				'camera' =>Request::get('camera'),
+				'processor' =>Request::get('processor'),
+				'frontCamera' =>Request::get('frontCamera'),
+				'os' =>Request::get('os'),
+				'model' =>Request::get('model'),
+				'ram' =>Request::get('ram'),
+				'flash' =>$this->inputHas('flash'),
+				'wireless' =>$this->inputHas('wireless'),
+				'bluetooth' =>$this->inputHas('bluetooth'),
+				'headset' =>$this->inputHas('headset'),
+
+				//'latitude' =>Request::get('latitude'),
+				//'longitude' =>Request::get('longitude'),
+				/*floor rooms  internet furniture telephone water cableTv garden
+				 airConditioning parking fence*/
+			);
+
+			$phone = new Phone($propertyData);
+			$phone->save();
+
+			return Redirect::to('/');
+
+		}
+	}
+
+	public function storeProduct($type){
+
+			error_log($type);
+
+			$file = Input::file('pictures');
+			$destinationPath = base_path().'/public/img';
+			$filename = $file->getClientOriginalName();
+			Input::file('pictures')->move($destinationPath, $filename);	
+
+		$productData = array(
+				'type' => $type,
+				'name' => Request::get('name'),
+				'userId' => Auth::user()->id,
+				'price' =>Request::get('price'),
+				'stock' => Request::get('stock'),
+				'isItNew' =>$this->inputHas('isItNew'),
+				'moneyRetreive' =>$this->inputHas('moneyRetreive'),
+				'shortDesc' => Request::get('shortDescription'),
+				'pictures' => base_path().'/public/img/'.Request::file('pictures')->getClientOriginalName(),
+				'longDesc' => Request::get('longDescription'),
+				/*floor rooms kmFromCityCenter internet furniture telephone water cableTv garden airConditioning parking fence*/
+
+			);
+
+			$product = new Product($productData);
+			$product->save();
+	}
+
+	public function index2($category){
+		$products = Product::orderBy('views', 'desc')->where('type', $category)->take(10)->get();
+		return view('emarket.index')->with('products', $products);
 	}
 }
