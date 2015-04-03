@@ -10,6 +10,7 @@ use Illuminate\Support\Str;
 use Auth;
 use Redirect;
 use View;
+use Validator;
 use Input;
 
 
@@ -47,6 +48,11 @@ class EmarketController extends Controller {
 		$products = Product::orderBy('views', 'desc')->take(10)->get();
 
 		return view('emarket.index')->with('products', $products);
+	}
+
+	public function productview($product){
+		$product = Product::where('id', $product)->first();
+		return view('emarket.productview')->with('product', $product);
 	}
 
 	public function inputHas($name){
@@ -100,6 +106,17 @@ class EmarketController extends Controller {
 	}
 
 	public function addpropertypost(){
+
+	$images = Input::file('pictures');
+
+		if(!is_array($images))
+			$images = array($images);
+
+	foreach ($images as $image) {
+			$validator = Validator::make(
+            array('file' => $image),
+            array('file' => 'required|image|max:1000'));
+	}
 	
 	$validationProperty = Property::validate(Input::all());
 	$validation = Product::validate(Input::all());
@@ -109,31 +126,12 @@ class EmarketController extends Controller {
 		return Redirect::to('addproperty')->withErrors($validation)->withInput();
 	}else if($validationProperty->fails()){
 		return Redirect::to('addproperty')->withErrors($validationProperty)->withInput();
+	}else if($validator->fails()){
+			return Redirect::to('addphone')->withErrors($validator)->withInput();
 	}else{
 
-			$file = Input::file('pictures');
-			$destinationPath = base_path().'/public/img';
-			$filename = $file->getClientOriginalName();
-			Input::file('pictures')->move($destinationPath, $filename);	
-
-		$productData = array(
-				'name' => Request::get('name'),
-				'type' => 0,
-				'userId' => Auth::user()->id,
-				'price' =>Request::get('price'),
-				'stock' => Request::get('stock'),
-				'isItNew' =>$this->inputHas('isItNew'),
-				'moneyRetreive' =>$this->inputHas('moneyRetreive'),
-				'shortDesc' => Request::get('shortDescription'),
-				'pictures' => base_path().'/public/img/'.Request::file('pictures')->getClientOriginalName(),
-				'longDesc' => Request::get('longDescription'),
-				/*floor rooms kmFromCityCenter internet furniture telephone water cableTv garden airConditioning parking fence*/
-
-			);
-
-			$product = new Product($productData);
-			$product->save();
-
+			
+			$this->storeProduct(0);
 			$findId = Product::where('name', Request::get('name'))->first();
 			$productId = $findId->id;
 
@@ -187,6 +185,17 @@ class EmarketController extends Controller {
 
 	public function addphonepost(){
 
+		$images = Input::file('pictures');
+
+		if(!is_array($images))
+			$images = array($images);
+
+		foreach ($images as $image) {
+			$validator = Validator::make(
+            array('file' => $image),
+            array('file' => 'required|image|max:1000'));
+		}
+
 		$validationProperty = Phone::validate(Input::all());
 		$validation = Product::validate(Input::all());
 
@@ -195,6 +204,8 @@ class EmarketController extends Controller {
 			return Redirect::to('addphone')->withErrors($validation)->withInput();
 		}else if($validationProperty->fails()){
 			return Redirect::to('addphone')->withErrors($validationProperty)->withInput();
+		}else if($validator->fails()){
+			return Redirect::to('addphone')->withErrors($validator)->withInput();
 		}else{
 
 			$this->storeProduct(1);
@@ -233,12 +244,21 @@ class EmarketController extends Controller {
 
 	public function storeProduct($type){
 
-			error_log($type);
+			$picturesName = " ";
+			
+			$files = Input::file('pictures');
+			if(!is_array($files))
+				$files = array($files);
 
-			$file = Input::file('pictures');
-			$destinationPath = base_path().'/public/img';
-			$filename = $file->getClientOriginalName();
-			Input::file('pictures')->move($destinationPath, $filename);	
+			foreach ($files as $file) {
+				$destinationPath = base_path().'/public/img';
+				$filename = $file->getClientOriginalName();
+				$file->move($destinationPath, $filename);
+				global $picturesName;
+				$picturesName = $picturesName.base_path().'/public/img/'.$filename;
+			}
+
+
 
 		$productData = array(
 				'type' => $type,
@@ -249,7 +269,7 @@ class EmarketController extends Controller {
 				'isItNew' =>$this->inputHas('isItNew'),
 				'moneyRetreive' =>$this->inputHas('moneyRetreive'),
 				'shortDesc' => Request::get('shortDescription'),
-				'pictures' => base_path().'/public/img/'.Request::file('pictures')->getClientOriginalName(),
+				'pictures' => $picturesName,
 				'longDesc' => Request::get('longDescription'),
 				/*floor rooms kmFromCityCenter internet furniture telephone water cableTv garden airConditioning parking fence*/
 

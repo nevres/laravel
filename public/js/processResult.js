@@ -17,8 +17,10 @@ function up(){
 			});
 		}else
 			$('#searchResult').html('');
-	}, 150);
+	}, 100);
 }
+
 function down(){
 	clearTimeout(timer);
 }
+

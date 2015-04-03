@@ -13,16 +13,17 @@ use App\Product;
 | and give it the controller to call when that URI is requested.
 */
 
-Route::get('/', 'EmarketController@index');
-Route::get('/{category}', 'EmarketController@index2');
 Route::POST('addproduct', 'EmarketController@addproductpost');
 Route::GET('addproduct', 'EmarketController@addproduct');
 Route::Get('addproperty', 'EmarketController@addproperty');
 Route::POST('addproperty', 'EmarketController@addpropertypost');
 Route::GET('addphone', 'EmarketController@addphone');
 Route::POST('addphone', 'EmarketController@addphonepost');
-Route::POST('executeSearch', array('uses' => 'EmarketController@executeSearch'));
+Route::get('/', 'EmarketController@index');
+Route::get('/{category}', ['uses' =>'EmarketController@index2']);
+Route::get('product/{product}', ['as' => 'product', 'uses' => 'EmarketController@productview']);
 
+Route::POST('executeSearch', array('uses' => 'EmarketController@executeSearch'));
 Route::get('home', 'HomeController@index');
 
 

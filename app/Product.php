@@ -8,9 +8,9 @@ class Product extends Eloquent{
 	public $timestamps = false;
 
 	public static $rules = array(
-		'name' => 'required|min:3',
-		'price'=> 'required|integer',
-		'pictures' => 'image',
+		'name' => 'required | min:3',
+		'price'=> 'required | integer',
+		 #'pictures' => 'image | max:1000',
 		'stock' => 'required'
 	);
 

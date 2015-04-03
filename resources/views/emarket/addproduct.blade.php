@@ -217,7 +217,7 @@ google.maps.event.addListener(map, 'click', function(event) {
              <div class="form-group" style = "margin-top: 15px;">
               <label class="col-md-4 control-label">Choose image for an item </label>
               <div class="col-md-6">
-                <input type="file" name = "pictures" >
+                <input type="file" multiple name = "pictures[]" >
               </div>
             </div>
 

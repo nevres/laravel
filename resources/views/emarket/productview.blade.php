@@ -21,6 +21,7 @@
   <![endif]-->
 
   <style>
+
     img {
       display: block;
       max-width:230px;
@@ -29,19 +30,32 @@
       height: auto;
   } 
 
+   ul {         
+          padding:0 0 0 0;
+          margin:0 0 0 0;
+  }
+  ul li {     
+          list-style:none;
+          margin-bottom:25px;           
+      }
+  ul li img {
+          cursor: pointer;
+      }
+
   #search_container
   {
     margin-bottom: 15px;
 
   }
-    a{
-      color: inherit;
-    }
-
+  a{
+    color: inherit;
+  }
 
   </style>
+
 </head>
-<body>
+
+<body onload="print()">
   <nav class="navbar navbar-default">
     <div class="container-fluid">
       <div class="navbar-header">
@@ -87,16 +101,12 @@
     </div>
   </div>
 
-
-  <div class = "col-lg-9">
-  @foreach($products as $product)
+<!--
+<div class = "col-lg-9">
     <a href="{{route('product', [$product->id])}}">
       <div class = "col-lg-3">
              <div class = "panel panel-default">
                 <div class = "panel-heading">
-                    <!--
-                    To use later to put a link to every item
-                    <a href = "/{{$product->id}}"-->
                     <h4>{{$product->name}}</br><small>Poseted on {{substr($product->date, 0, 10)}}</small></h4>
                 </div>
                 <div class = "panel-body">
@@ -104,37 +114,93 @@
                        <b>Views:</b> {{$product->views}}
                     </p>
                     
-                    <img class = "featuredImg" src= "img/{{basename($product->pictures)}}">
+                    <img class = "featuredImg" src= "/img/{{basename($product->pictures)}}">
+                    <?php $index = strpos($product->pictures, basename($product->pictures)) + strlen(basename($product->pictures));
+
+                    $firstBaseName = basename(substr($product->pictures, 0, $index));
+                    $secondBaseName = basename(substr($product->pictures, $index, strlen($product->pictures)));
+                    #echo $firstBaseName;
+                    #echo $secondBaseName;
+                    ?>
                     <p>{{$product->shortDesc}}</p>
                   </div>
             </div>
           </div>
       </a>
-  @endforeach
+</div>
+-->
+
+<!-- code for dynamicly adding images from database
+var myPictures = "C:/wamp/www/laravel/public/img/apartmenthouse.jpgC:/wamp/www/laravel/public/img/house.jpgC:/wamp/www/laravel/public/img/housepool.jpg";
+
+var index = 0;
+var notcancel = true;
+
+while(notcancel){ 
+    if(myPictures.indexOf("C:/", index+1) != -1){
+    console.log(myPictures.substring(index, myPictures.indexOf("C:/", index+1))); 
+        index = myPictures.indexOf("C:/", index+1);}
+    else{
+        console.log(myPictures.substring(index, myPictures.length));
+         break;
+    }
+}
+
+
+var holdyDiv = $('.pictureContainer').append('img');
+$(holdyDiv).attr('class', 'thumbnail');
+$(holdyDiv).attr('src', myPictures.substring(0, myPictures.length));
+
+-->
+
+<div class = "row">
+  <div class = "col-lg-3">
+      <img class = "thumbnail" src= "/img/{{basename($product->pictures)}}"/>
+  </div>
+
+
+  <div class = "col-lg-3">
+    <div class = "panel panel-default">
+      <div class = "panel-heading">
+       <h4>{{$product->name}}</br><small>Poseted on {{substr($product->date, 0, 10)}}</small></h4>
+      </div>
+    <div class = "panel-body">
+      <p><b>Price:</b> {{$product->price}}</br>
+         <b>Views:</b> {{$product->views}}</br>
+         <b>UserId:</b> {{$product->userId}}</br>
+         <b>Is It New: <p class="glyphicon glyphicon-ok" id = "glyphiconOK"></p>
+         <p id="products"><?php echo json_encode($product); ?></p>
+         <p class="glyphicon glyphicon-remove" id = "glyphiconRemove"></p>
+         <input type="text" id="data" value = "{{$product->isItNew}}">
+        </br>
+       </p>
+    </div>
+  </div>
+</div>
 </div>
 
+<div class="container">
+     <ul class="row">
+      <div class = "pictureContainer">
+         
+        </div>
+     </ul>
+</div>
 
-<div class = "col-lg-3" style = "float:right">
-      <div class = "list-group">
-        <a href="/" class = "list-group-item active">Popular</a>
-        <a href="/0" class = "list-group-item ">Properties</a>
-        <a href="/1" class = "list-group-item">Mobile Phones</a>
-        <a href="/2" class = "list-group-item">Computers</a>
-        <a href="/3" class = "list-group-item">Clothes</a>
-        <a href="/4" class = "list-group-item">Electronics</a>
-        <a href="/5" class = "list-group-item">Sport Equipement</a>
-        <a href="/6" class = "list-group-item">Art</a>
-        <a href="/7" class = "list-group-item">Animals</a>
-        <a href="/8" class = "list-group-item">My Home and Gardenn</a>
-        <a href="/9" class = "list-group-item">Jewerly and Watches</a>
-      </div>
+<div class = "container">
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">         
+            <div class="modal-body">                
+            </div>
+          </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+      </div><!-- /.modal -->
     </div>
-
-
 
   <!-- Scripts -->
   <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
-  <script src ="{{'js/processResult.js'}}"></script>
+  <script src ="{{'/js/processBooleans.js'}}"></script>
 </body>
 </html>
