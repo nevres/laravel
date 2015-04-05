@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Str;
 use Auth;
 use Redirect;
+use App\Comment;
 use View;
 use Validator;
 use Input;
@@ -45,14 +46,30 @@ class EmarketController extends Controller {
 	 */
 	public function index()
 	{	
-		$products = Product::orderBy('views', 'desc')->take(10)->get();
+		$products = Product::orderBy('views', 'desc')->take(15)->get();
 
 		return view('emarket.index')->with('products', $products);
 	}
 
 	public function productview($product){
-		$product = Product::where('id', $product)->first();
-		return view('emarket.productview')->with('product', $product);
+		
+		$productType = Product::where('id', $product)->first();
+		
+		switch ($productType->type) {
+			case '0':
+				$joinResult = Product::join('properties', 'properties.productId', '=', 'products.id')->where('id', $product)->first();
+				return view('emarket.propertyview')->with('product', $joinResult);
+				break;
+
+			case '1':
+				$joinResult = Product::join('phones', 'phones.productId', '=', 'products.id')->where('id', $product)->first();
+				return view('emarket.productview')->with('product', $joinResult);
+				break;
+
+			default:
+				return 'product nor found';
+				break;
+		}
 	}
 
 	public function inputHas($name){
@@ -60,6 +77,30 @@ class EmarketController extends Controller {
 			return $name = 1;
 		else 
 			return $name = 0;
+	}
+
+	public function addComment(){
+		$title = Input::get('title');
+		$productId = Input::get('productId');
+		$content = Input::get('content');
+		
+		$validationComment = Comment::validate(Input::all());
+
+		if($validationComment->fails())
+			return 'error';
+		else{
+		$commentData = array(
+				'userId' => Auth::user()->id,
+				'productId' => Input::get('productId'),
+				'title' =>Input::get('title'),
+				'content' =>Input::get('content'),
+			);
+			$comment = new Comment($commentData);
+			$comment->save();
+
+			return 'successful';
+		}
+
 	}
 
 	public function addproduct(){

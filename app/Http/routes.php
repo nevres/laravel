@@ -24,6 +24,9 @@ Route::get('/{category}', ['uses' =>'EmarketController@index2']);
 Route::get('product/{product}', ['as' => 'product', 'uses' => 'EmarketController@productview']);
 
 Route::POST('executeSearch', array('uses' => 'EmarketController@executeSearch'));
+Route::POST('addComment', array('uses' => 'EmarketController@addComment'));
+
+
 Route::get('home', 'HomeController@index');
 
 

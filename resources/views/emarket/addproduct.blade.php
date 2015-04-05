@@ -74,8 +74,8 @@ google.maps.event.addListener(map, 'click', function(event) {
          }
   marker = createMarker(event.latLng, "name", "<b>Location</b><br>"+event.latLng);
 
-  document.getElementById("lat").value = event.latLng.lat();
-  document.getElementById("long").value = event.latLng.lng();
+  /*document.getElementById("lat").value = event.latLng.lat();
+  document.getElementById("long").value = event.latLng.lng();*/
   });
    }
 
