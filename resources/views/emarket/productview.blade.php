@@ -8,6 +8,7 @@
   <title>Laravel</title>
 
   <link href="/css/app.css" rel="stylesheet">
+  <link href= "/css/listgroup.css" rel = "stylesheet">
 
   <!-- Fonts -->
   <link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
@@ -153,6 +154,7 @@ google.maps.event.addListener(map, 'click', function(event) {
   function onLoadFunction(){
     processBooleans();
     initialize();
+    listComments();
   }
 
 </script>
@@ -243,6 +245,7 @@ google.maps.event.addListener(map, 'click', function(event) {
     </div>
   </ul>
 </div>
+
 
 <div class = "container">
   <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

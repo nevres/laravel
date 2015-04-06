@@ -54,16 +54,17 @@ class EmarketController extends Controller {
 	public function productview($product){
 		
 		$productType = Product::where('id', $product)->first();
+		$comments = Comment::where('productId', $product)->get();
 		
 		switch ($productType->type) {
 			case '0':
 				$joinResult = Product::join('properties', 'properties.productId', '=', 'products.id')->where('id', $product)->first();
-				return view('emarket.propertyview')->with('product', $joinResult);
+				return view('emarket.propertyview')->with('product', $joinResult)->with('comments', $comments);
 				break;
 
 			case '1':
 				$joinResult = Product::join('phones', 'phones.productId', '=', 'products.id')->where('id', $product)->first();
-				return view('emarket.productview')->with('product', $joinResult);
+				return view('emarket.productview')->with('product', $joinResult)->with('comments', $comments);
 				break;
 
 			default:
@@ -98,7 +99,7 @@ class EmarketController extends Controller {
 			$comment = new Comment($commentData);
 			$comment->save();
 
-			return 'successful';
+			return "<p>$title comment was added</p>";
 		}
 
 	}

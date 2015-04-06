@@ -3,8 +3,8 @@
 @section('extraData')
 <div class="container">
 			<ul class="nav nav-pills nav-justified" style = "padding-bottom: 20px;">
-				<li class="active"><a href="#Home" data-toggle="tab">Details about product</a></li>
-				<li><a href="#Comments" data-toggle="tab">Comments</a></li>
+				<li><a href="#Home" data-toggle="tab">Details about product</a></li>
+				<li class="active"><a href="#Comments" data-toggle="tab">Comments</a></li>
 				<li><a href="#Map" data-toggle="tab">Map</a></li>
 			</ul>
 
@@ -41,14 +41,32 @@
 	  			</div>
 				<div class="tab-pane fade in active"  id="Comments">
 					 <form class="form-group">
-			          Comment Title: <input type="text" class="form-control" autocomplete="off" style = "width:400px" id ="commentTitle" >
-			          Comment: <input type="text" class="form-control" autocomplete="off" style = "width:400px" id ="commentContent" >
-			          <p id= "products" style = "font-size:0;"><?php echo json_encode($product); ?></p>
-			          <button type="submit" style = "margin-top: 10px" class="btn btn-default" onclick = "publishComment();return false;">Add Comment</button>
-			      </form>
+				          Comment Title: <input type="text" class="form-control" autocomplete="off" style = "width:400px" id ="commentTitle" >
+				          Comment: <input type="text" class="form-control" autocomplete="off" style = "width:400px" id ="commentContent" >
+				          <p id= "products" style = "font-size:0;"><?php echo json_encode($product); ?></p>
+				          <p id= "comments" style = "font-size:0;"><?php echo json_encode($comments); ?></p>
+				          <button type="submit" class="btn btn-default" onclick = "publishComment();return false;" data-toggle="tooltip" data-placement="top" title="Make a Comment"><span class="glyphicon glyphicon-pencil"></span></button>
+			      	</form>
 
 			      <div class = "addSomeText">
 			      </div>
+
+			      <div class="panel-group" id="accordion">
+		            <div class="panel panel-default">
+		              <div class="panel-heading">
+		                <h4 class="panel-title">
+		                  <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"><span class="glyphicon glyphicon-folder-close">
+		                    </span>Comments</a>
+		                </h4>
+		              </div>
+
+		              <div id="collapseOne" class="panel-collapse collapse in">
+		                <ul class="list-group" id = "mainListGroup">
+		                  </li>
+		                </ul>
+		              </div>
+		            </div>
+		          </div>
 			  </div>
 
 				<div class="tab-pane fade"  id="Map">
