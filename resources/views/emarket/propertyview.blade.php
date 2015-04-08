@@ -40,14 +40,29 @@
 	  				</div>
 	  			</div>
 				<div class="tab-pane fade in active"  id="Comments">
-					 <form class="form-group">
-				          Comment Title: <input type="text" class="form-control" autocomplete="off" style = "width:400px" id ="commentTitle" >
-				          Comment: <input type="text" class="form-control" autocomplete="off" style = "width:400px" id ="commentContent" >
-				          <p id= "products" style = "font-size:0;"><?php echo json_encode($product); ?></p>
-				          <p id= "comments" style = "font-size:0;"><?php echo json_encode($comments); ?></p>
-				          <button type="submit" class="btn btn-default" onclick = "publishComment();return false;" data-toggle="tooltip" data-placement="top" title="Make a Comment"><span class="glyphicon glyphicon-pencil"></span></button>
-			      	</form>
+					 <div class="modal fade" id="modal-1">
+						<div class="modal-dialog modal-lg">
+							<div class="modal-content">
+								 <div class="modal-header">
+								 	<button type="button" class="close" data-dismiss="modal">&times;</button>
+								 	<h3 class="modal-title">Add New Comment</h3>
+								 </div>
+								 <div class="modal-body">
+									<form class="form-group">
+							          Comment Title: <input type="text" class="form-control" autocomplete="off" style = "width:400px" id ="commentTitle" >
+							          Comment: <input type="text" class="form-control" autocomplete="off" style = "width:400px" id ="commentContent" >
+							          <p id= "products" style = "font-size:0;"><?php echo json_encode($product); ?></p>
+							          <p id= "comments" style = "font-size:7;"><?php echo json_encode($comments); ?></p>
+							        </form>
+								 </div>
 
+								 <div class="modal-footer">
+								 	<button type="submit" class="btn btn-default" onclick = "publishComment();return false;" data-toggle="tooltip" data-placement="top" title="Make a Comment">Add a Comment</button>
+								 	<a href="" class="btn btn-default" data-dismiss="modal">Close</a>
+								 </div>
+							</div>
+						</div>
+					</div>
 			      <div class = "addSomeText">
 			      </div>
 
@@ -68,7 +83,6 @@
 		            </div>
 		          </div>
 			  </div>
-
 				<div class="tab-pane fade"  id="Map">
 					<div id="map-canvas"></div>
 					<script>

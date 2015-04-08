@@ -52,9 +52,11 @@ class EmarketController extends Controller {
 	}
 
 	public function productview($product){
+
 		
 		$productType = Product::where('id', $product)->first();
-		$comments = Comment::where('productId', $product)->get();
+		Product::where('id', $product)->update(array('views' => $productType->views+1));
+		$comments = User::join('comments', 'users.id', '=', 'comments.userId' )->where('productId', $product)->get();
 		
 		switch ($productType->type) {
 			case '0':

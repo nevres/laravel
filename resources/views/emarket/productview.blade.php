@@ -9,6 +9,7 @@
 
   <link href="/css/app.css" rel="stylesheet">
   <link href= "/css/listgroup.css" rel = "stylesheet">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
   <!-- Fonts -->
   <link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
@@ -116,6 +117,7 @@ function createMarker(latlng, name, html) {
         infowindow.open(map,marker);
         });
     google.maps.event.trigger(marker, 'click');    
+
     return marker;
 }
   
@@ -146,6 +148,7 @@ google.maps.event.addListener(map, 'click', function(event) {
 
   document.getElementById("lat").value = event.latLng.lat();
   document.getElementById("long").value = event.latLng.lng();
+
   });
   
   }
@@ -196,6 +199,8 @@ google.maps.event.addListener(map, 'click', function(event) {
       </div>
     </div>
   </nav>
+    
+
 
   <div class = "container" id = "search_container">
     <div class="navbar-form navbar-left" role="search">
@@ -261,7 +266,6 @@ google.maps.event.addListener(map, 'click', function(event) {
 @yield('extraData')
 
   <!-- Scripts -->
-  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
   <script src ="{{'/js/processBooleans.js'}}"></script>
   <script src ="{{'/js/processResult.js'}}"></script> 
