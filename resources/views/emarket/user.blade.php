@@ -16,42 +16,26 @@
   <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAb6SpL1HaxqNtEkzL39GUhdZq5udws7HY&sensor=false">
   </script>
 
+  <link href="/css/star-rating.css" media="all" rel="stylesheet" type="text/css" />
+  <script src="/js/star-rating.js" type="text/javascript"></script>
 
-  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-  <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-  <![endif]-->
+<style>
 
-  <style>
-
-  .col-lg-2 > img {
+  img {
       display: block;
       max-width:230px;
       max-height:95px;
       width: auto;
       height: auto;
-  }
+  } 
 
-
-   ul {         
-          padding:0 0 0 0;
-          margin:0 0 0 0;
-  }
-  ul li {     
-          list-style:none;
-          margin-bottom:25px;           
-      }
-  ul li img {
-          cursor: pointer;
-      }
 
   #search_container
   {
     margin-bottom: 15px;
 
   }
+
   a{
     color: inherit;
   }
@@ -151,17 +135,13 @@ google.maps.event.addListener(map, 'click', function(event) {
   });
   
   }
-
   
   function onLoadFunction(){
-    processBooleans();
-    listComments();
-    initialize(); 
-    processyesno();
+     listReviews();
+     initialize(); 
   }
 
-</script>
-
+  </script>
 
 </head>
 
@@ -199,10 +179,8 @@ google.maps.event.addListener(map, 'click', function(event) {
       </div>
     </div>
   </nav>
-    
 
-
-  <div class = "container" id = "search_container">
+<div class = "container" id = "search_container">
     <div class="navbar-form navbar-left" role="search">
         <form class="form-group">
           <input type="text" class="form-control" autocomplete="off"  placeholder="Search for product. Example: iPhone 6" style = "width:400px" onkeyup = "up()" onkeydown= "down()" id ="searchInput" >
@@ -213,91 +191,121 @@ google.maps.event.addListener(map, 'click', function(event) {
     </div>
   </div>
 
-<div class = "row">
+  <p id= "reviews" style = "font-size:0;"><?php echo json_encode($reviews); ?></p>
+
+  <div class = "row">
   <div class = "container">
+
   <div class = "col-lg-3">
-      <img id = "mainPhoto" src= "/img/{{basename($product->pictures)}}"/>
+      <img id = "mainPhoto" src= "/img/{{basename($user->profilePicture)}}"/>
   </div>
 
-
-  <div class = "col-lg-9" style = "padding-left: 40px; padding-bottom : 30px;">
+<div class = "col-lg-9" style = "padding-left: 40px; padding-bottom : 20px;">
     <div class = "panel panel-default panel-danger">
       <div class = "panel-heading">
-       <h4>{{$product->name}}</br><small>Poseted on {{substr($product->date, 0, 10)}}</small></h4>
+       <h4>{{$user->first_name." ".$user->second_name}}</br></h4>
       </div>
     <div class = "panel-body">
-      <p><b>Price:</b> {{$product->price}}</br>
-         <b>Views:</b> {{$product->views}}</br>
-         <a href = "/user/{{$product->userId}}"><b>UserId:</b> {{$product->userId}}</br></a>
-         <b>Is It New:</b> <b class="glyphicon glyphicon-ok" id = "glyphiconOK"></b><b class="glyphicon glyphicon-remove" id = "glyphiconRemove"></b>
-         </br><b>Short Description:</b> {{$product->shortDesc}}
-         <p id= "products" style = "font-size:0;"><?php echo json_encode($product); ?></p>
+      <p><b>Name:</b> {{$user->first_name}}</br>
+        <b>Surname:</b> {{$user->second_name}}</br>
+        <b>Profile Created Before:</b>
+          <?php
+          $myDate = substr($user->created_at, 0, 10);
+          $myMonth = mb_substr($user->created_at, 5, 2);
+          $myYear = substr($myDate, 0, 4);
+          $myDay = substr($myDate, 8, 11);
+          $todayMonth = date('n');
+          $todayDay = date('j');
+          $todayYear = date('Y');
+
+          $monthDifference = abs($myMonth-$todayMonth);
+          $dayDifference = abs($myDay - $todayDay);
+          $yearDifference = abs($myYear - $todayYear);
+          
+          if($yearDifference > 0)
+            echo $yearDifference." years and ".$monthDifference." months.";
+          else if($monthDifference > 0)
+            if($monthDifference == 1)
+              echo $monthDifference." month and ".$dayDifference." days.";
+            else
+              echo $monthDifference." months and ".$dayDifference." days.";
+          else
+            echo $dayDifference." days ";
+          
+        ?>
+      </br>
+        <b>Email:</b> {{$user->email}}</br>
+         <p id= "user" style = "font-size:0;"><?php echo json_encode($user); ?></p>
         </br>
        </p>
     </div>
+
   </div>
 </div>
+
 </div>
 </div>
-
-<div class="container">
-  <ul class="row">
-    <div class="panel panel-default">
-      <div class="panel-heading"><h3 class="panel-title">Images for an item</h3></div>
-      <div class="panel-body">
-        <div class = "pictureContainer"></div>
-      </div> 
-    </div>
-  </ul>
-</div>
-
-
-<div class = "container">
-  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">         
-            <div class="modal-body">                
-            </div>
-          </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-      </div><!-- /.modal -->
-    </div>
 
 <div class="container">
       <ul class="nav nav-pills nav-justified" style = "padding-bottom: 20px;">
-        <li><a href="#Home" data-toggle="tab">Details about product</a></li>
-        <li class="active"><a href="#Comments" data-toggle="tab">Comments</a></li>
-        <li><a href="#Map" data-toggle="tab">Map</a></li>
+        <li class="active"><a href="#activeProductsTab" data-toggle="tab">Active Products</a></li>
+        <li><a href="#inactiveProductsTab" data-toggle="tab">Previous-Inactive Products</a></li>
+        <li><a href="#Comments" data-toggle="tab">User Reviews</a></li>
       </ul>
 
       <div class="tab-content">
-        <div class="tab-pane fade"  id="Home">
-          @yield('extraData');
+        <div class="tab-pane fade"  id="activeProductsTab">
+             <div class = "col-lg-9">
+              @foreach($activeProducts as $activeProduct)
+                <a href="{{route('product', [$activeProduct->id])}}">
+                  <div class = "col-lg-3" style = "position:relative; ">
+                         <div class = "panel panel-default">
+                            <div class = "panel-heading">
+                                <h4>{{$activeProduct->name}}</br><small>Poseted on {{substr($activeProduct->date, 0, 10)}}</small></h4>
+                            </div>
+                            <div class = "panel-body">
+                                <p><b>Price:</b> {{$activeProduct->price}}</br>
+                                   <b>Views:</b> {{$activeProduct->views}}
+                                </p>
+                                
+                                <img class = "featuredImg" src= "/img/{{basename($activeProduct->pictures)}}">
+                                {{basename($activeProduct->pictures)}}
+                                <p>{{$activeProduct->shortDesc}}</p>
+                              </div>
+                          </div>
+                      </div>
+                  </a>
+              @endforeach
+            </div>
           </div>
+
         <div class="tab-pane fade in active"  id="Comments">
+
+
            <div class="modal fade" id="modal-1">
             <div class="modal-dialog modal-lg">
               <div class="modal-content">
                  <div class="modal-header">
                   <button type="button" class="close" data-dismiss="modal">&times;</button>
-                  <h3 class="modal-title">Add New Comment</h3>
+                  <h3 class="modal-title">Add New Review</h3>
                  </div>
                  <div class="modal-body">
                   <form class="form-group">
-                        Comment Title: <input type="text" class="form-control" autocomplete="off" style = "width:400px" id ="commentTitle" >
-                        Comment: <input type="text" class="form-control" autocomplete="off" style = "width:400px" id ="commentContent" >
-                        <p id= "products" style = "font-size:0;"><?php echo json_encode($product); ?></p>
-                        <p id= "comments" style = "font-size:7;"><?php echo json_encode($comments); ?></p>
-                      </form>
+                        Review Message: <input type="text" class="form-control" autocomplete="off" style = "width:400px" id ="reviewMessage" >
+                        <input id="input-21d" value="2" type="number" class="rating" min=0 max=5 step=0.5 data-size="sm">
+                  </form>
                  </div>
 
                  <div class="modal-footer">
-                  <button type="submit" class="btn btn-default" onclick = "publishComment();return false;" data-toggle="tooltip" data-placement="top" title="Make a Comment">Add a Comment</button>
+                  <button type="submit" class="btn btn-default" onclick = "publishReview();return false;" data-toggle="tooltip" data-placement="top" title="Make a Review">Add a Review</button>
                   <a href="" class="btn btn-default" data-dismiss="modal">Close</a>
                  </div>
               </div>
             </div>
           </div>
+
+          
+
             <div class = "addSomeText">
             </div>
 
@@ -306,38 +314,51 @@ google.maps.event.addListener(map, 'click', function(event) {
                   <div class="panel-heading">
                     <h4 class="panel-title">
                       <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"><span class="glyphicon glyphicon-folder-close">
-                        </span>Comments</a>
+                        </span>Reviews</a>
                     </h4>
                     <div class = "defaultAddComment">
-
+                        
                     </div>
                   </div>
 
                   <div id="collapseOne" class="panel-collapse collapse in">
                     <ul class="list-group" id = "mainListGroup">
-                      </li>
                     </ul>
                   </div>
                 </div>
               </div>
         </div>
-        <div class="tab-pane fade"  id="Map">
-          <div id="map-canvas"></div>
-          <script>
-            google.maps.event.trigger(map, 'resize');
-            map.setZoom( map.getZoom());
-              createMarker(new google.maps.LatLng(43.25720566,20.846557617),
-              "name", "<b>Location</b><br>"+new google.maps.LatLng(43.25720566,20.846557617));
-          </script>
-        </div>
+
+        <div class="tab-pane fade"  id="inactiveProductsTab">
+             <div class = "col-lg-9">
+              @foreach($inactiveProducts as $inactiveProduct)
+                <a href="{{route('product', [$inactiveProduct->id])}}">
+                  <div class = "col-lg-3" style = "position:relative; ">
+                         <div class = "panel panel-default">
+                            <div class = "panel-heading">
+                                <h4>{{$inactiveProduct->name}}</br><small>Poseted on {{substr($inactiveProduct->date, 0, 10)}}</small></h4>
+                            </div>
+                            <div class = "panel-body">
+                                <p><b>Price:</b> {{$inactiveProduct->price}}</br>
+                                   <b>Views:</b> {{$inactiveProduct->views}}
+                                </p>
+                                
+                                <img class = "featuredImg" src= "/img/{{basename($inactiveProduct->pictures)}}">
+                                {{basename($inactiveProduct->pictures)}}
+                                <p>{{$inactiveProduct->shortDesc}}</p>
+                              </div>
+                          </div>
+                      </div>
+                  </a>
+              @endforeach
+            </div>
+          </div>
       </div>
     </div>
 
+
   <!-- Scripts -->
   <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
-  <script src ="{{'/js/processBooleans.js'}}"></script>
-  <script src ="{{'/js/processResult.js'}}"></script> 
-  <script src ="{{'/js/publishComment.js'}}"></script>
-  @yield('scriptName');
+  <script src ="{{'/js/publishReviews.js'}}"></script>
 </body>
 </html>

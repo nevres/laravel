@@ -1,11 +1,4 @@
 
-@extends('emarket.addproduct')
-
-@section('address')
-  /addproperty
-@endsection
-
-@section('data')
 			<div class="form-group">
               <label class="col-md-4 control-label">Floor Number</label>
               <div class="col-md-6">
@@ -127,4 +120,4 @@
 
      </div>
  </div>
-@endsection
+

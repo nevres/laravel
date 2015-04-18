@@ -68,6 +68,7 @@
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ Auth::user()->name }} <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
                 <li><a href="/auth/logout">Logout</a></li>
+                <li><a href = "/user/{{Auth::user()->id}}">My Profile</a></li>
               </ul>
             </li>
           @endif
@@ -91,7 +92,7 @@
   <div class = "col-lg-9">
   @foreach($products as $product)
     <a href="{{route('product', [$product->id])}}">
-      <div class = "col-lg-3">
+      <div class = "col-lg-3" style = "position:relative; ">
              <div class = "panel panel-default">
                 <div class = "panel-heading">
                     <!--
@@ -107,7 +108,7 @@
                     <img class = "featuredImg" src= "img/{{basename($product->pictures)}}">
                     <p>{{$product->shortDesc}}</p>
                   </div>
-            </div>
+              </div>
           </div>
       </a>
   @endforeach

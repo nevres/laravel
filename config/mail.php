@@ -28,7 +28,7 @@ return [
 	|
 	*/
 
-	'host' => 'smtp.live.com',
+	'host' => 'smtp.gmail.com',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -54,7 +54,7 @@ return [
 	|
 	*/
 
-	'from' => ['address' => 'nevres_jahic@hotmail.com', 'name' => 'webAdmin'],
+	'from' => ['address' => 'j.nevres@gmail.com', 'name' => 'webAdmin'],
 
 	/*
 	|--------------------------------------------------------------------------
@@ -80,7 +80,7 @@ return [
 	|
 	*/
 	
-	'username' => 'nevres_jahic@hotmail.com',
+	'username' => 'j.nevres@gmail.com',
 
 	/*
 	|--------------------------------------------------------------------------

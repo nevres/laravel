@@ -1,10 +1,3 @@
-@extends('emarket.addproduct')
-
-@section('address')
-  /addphone
-@endsection
-
-@section('data')
 			     <div class="form-group">
               <label class="col-md-4 control-label">Model</label>
               <div class="col-md-6">
@@ -97,5 +90,3 @@
                 </div>
               </div>
             </div>
-
-@endsection

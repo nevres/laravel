@@ -143,7 +143,6 @@ google.maps.event.addListener(map, 'click', function(event) {
       </div>
     </div>
   </nav>
-
 <div class = "container">
 
 @if ($errors->has())
@@ -155,8 +154,18 @@ google.maps.event.addListener(map, 'click', function(event) {
 @endif
 
  <div class = "row">
-      <div class = "col-lg-6">
-          <form class="form-horizontal" role="form" method="POST" action= @yield('address') enctype="multipart/form-data">
+      <div class = "col-lg-12">
+          <form class="form-horizontal" role="form" method="POST" id = "mainForm" action = "addproduct" enctype="multipart/form-data">
+            
+          <ul class="nav nav-pills nav-justified" style = "margin-bottom:25px;">
+            <li class="active"><a href="#mainInformation" data-toggle="tab">Main Information</a></li>
+            <li><a href="#detailedInformation" >Detailed Information</a></li>
+            <li><a href="#imagesAndMap">Images and Map</a></li>
+          </ul>
+
+          <div class="tab-content">
+            <div class="tab-pane fade in active"  id="mainInformation">
+
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
             <div class="form-group">
@@ -211,36 +220,65 @@ google.maps.event.addListener(map, 'click', function(event) {
                 <input type="text" class="form-control" name="longDescription">
               </div>
             </div>
-
-            @yield('data')
-
-             <div class="form-group" style = "margin-top: 15px;">
-              <label class="col-md-4 control-label">Choose image for an item </label>
-              <div class="col-md-6">
-                <input type="file" multiple name = "pictures[]" >
-              </div>
-            </div>
-
+            
             <div class="form-group">
-              <div class="col-md-6 col-md-offset-4">
-                <button type="submit" class="btn btn-primary" style="margin-right: 15px;">
-                  Add Product
-                </button>
+            <label class="col-md-4 control-label">Choose product type: </label>
+            <div class = "col-md-6">
+            <div class="dropdown" style = "margin-bottom:30px;">
+              <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+                Product Type
+                <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                <li role="presentation"><a role="menuitem" id = "propertyitem" tabindex="-1" onclick = "managedropdowns()">Property</a></li>
+                <li role="presentation"><a role="menuitem" id = "phoneitem"tabindex="-1" onclick = "managedropdowns()">Phone</a></li>
+                <li role="presentation"><a role="menuitem" id = "computeritem" tabindex="-1" onclick = "managedropdowns()">Computer</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+                </div>
+                 <div class="tab-pane fade"  id="detailedInformation">
+                <div id = "mydiv">
+                  </div>
+                  @yield('data')
+              </div>
+
+              <div class = "tab-pane fade" id = "imagesAndMap">
+
+                <div class = "col-lg-12">
+                  <label class="control-label" style = "margin-bottom: 25px">Please mark location of property</label>
+                  <div id="map-canvas"></div>
+                </div>
+
+                <div class="form-group" style = "margin-top: 15px;">
+                  <label class="col-md-4 control-label">Choose image for an item </label>
+                  <div class="col-md-6">
+                    <input type="file" multiple name = "pictures[]" >
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <div class="col-md-6 col-md-offset-4">
+                    <button type="submit" class="btn btn-primary" style="margin-right: 15px;">
+                      Add Product
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
+          </div>
+
 
           </form>
         </div>
-
-         <div class = "col-lg-6">
-          <label class="control-label" style = "margin-bottom: 25px">Please mark location of property</label>
-      <div id="map-canvas"></div>
-      </div>
     </div>
   </div>
 
   <!-- Scripts -->
   <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
+   <script src ="{{'/js/managedropdowns.js'}}"></script>
 </body>
 </html>
