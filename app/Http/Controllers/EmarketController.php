@@ -9,6 +9,7 @@ use App\Review;
 use App\Computer;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Str;
+use Session;
 use Auth;
 use Redirect;
 use App\Comment;
@@ -51,6 +52,11 @@ class EmarketController extends Controller {
 		$products = Product::orderBy('views', 'desc')->take(15)->get();
 
 		return view('emarket.index')->with('products', $products);
+	}
+
+	public function changeLanguage($language){
+		Session::set('locale', $language);
+		return Redirect::back();
 	}
 
 	public function userview($user){

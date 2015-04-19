@@ -71,6 +71,15 @@
                 <li><a href = "/user/{{Auth::user()->id}}">My Profile</a></li>
               </ul>
             </li>
+
+            <li class="dropdown">
+              <a href = "#" class = "dropdown-toggle" data-toggle = "dropdown" role = "button" aria-expanded = "false">@lang('indextranslation.Language')<span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                <li><a href="{{route('language', ['en'])}}">English</a></li>
+                <li><a href="{{route('language', ['tr'])}}">Turkish</a></li>
+              </ul>
+            </li>
+
           @endif
         </ul>
       </div>
@@ -83,7 +92,7 @@
           <input type="text" class="form-control" autocomplete="off"  placeholder="Search for product. Example: iPhone 6" style = "width:400px" onkeyup = "up()" onkeydown= "down()" id ="searchInput" >
           <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
       </form>
-    <a href="/addproduct"><button type="submit" class="btn btn-primary" style = "margin-left:35px">Add a Product</button></a>
+    <a href="/addproduct"><button type="submit" class="btn btn-primary" style = "margin-left:35px">{{trans('indextranslation.Add a Product')}}</button></a>
     <p id = "searchResult"></p>
     </div>
   </div>
@@ -98,15 +107,15 @@
                     <!--
                     To use later to put a link to every item
                     <a href = "/{{$product->id}}"-->
-                    <h4>{{$product->name}}</br><small>Poseted on {{substr($product->date, 0, 10)}}</small></h4>
+                    <h4>{{$product->name}}</br><small>{{trans('indextranslation.Posted on')}} {{substr($product->date, 0, 10)}}</small></h4>
                 </div>
                 <div class = "panel-body">
-                    <p><b>Price:</b> {{$product->price}}</br>
-                       <b>Views:</b> {{$product->views}}
+                    <p><b>{{trans('indextranslation.Price')}}:</b> {{$product->price}}</br>
+                       <b>{{trans('indextranslation.Views')}}:</b> {{$product->views}}
                     </p>
                     
                     <img class = "featuredImg" src= "img/{{basename($product->pictures)}}">
-                    <p>{{$product->shortDesc}}</p>
+                    <p>{{substr($product->shortDesc, 0, 25)}}...</p>
                   </div>
               </div>
           </div>
@@ -117,21 +126,23 @@
 
 <div class = "col-lg-3" style = "float:right">
       <div class = "list-group">
-        <a href="/" class = "list-group-item active">Popular</a>
-        <a href="/0" class = "list-group-item ">Properties</a>
-        <a href="/1" class = "list-group-item">Mobile Phones</a>
-        <a href="/2" class = "list-group-item">Computers</a>
-        <a href="/3" class = "list-group-item">Clothes</a>
-        <a href="/4" class = "list-group-item">Electronics</a>
-        <a href="/5" class = "list-group-item">Sport Equipement</a>
-        <a href="/6" class = "list-group-item">Art</a>
-        <a href="/7" class = "list-group-item">Animals</a>
-        <a href="/8" class = "list-group-item">My Home and Gardenn</a>
-        <a href="/9" class = "list-group-item">Jewerly and Watches</a>
+        <a href="/" class = "list-group-item active">{{trans('indextranslation.Popular')}}</a>
+        <a href="/0" class = "list-group-item ">@lang('indextranslation.Properties')</a>
+        <a href="/1" class = "list-group-item">@lang('indextranslation.Mobile Phones')</a>
+        <a href="/2" class = "list-group-item">@lang('indextranslation.Computers')</a>
+        <a href="/3" class = "list-group-item">@lang('indextranslation.Clothes')</a>
+        <a href="/4" class = "list-group-item">@lang('indextranslation.Electronics')</a>
+        <a href="/5" class = "list-group-item">@lang('indextranslation.Sport Equipement')</a>
+        <a href="/6" class = "list-group-item">@lang('indextranslation.Art')</a>
+        <a href="/7" class = "list-group-item">@lang('indextranslation.Animals')</a>
+        <a href="/8" class = "list-group-item">@lang('indextranslation.My Home and Gardenn')</a>
+        <a href="/9" class = "list-group-item">@lang('indextranslation.Jewerly and Watches')</a>
       </div>
     </div>
 
 
+    {{trans('indextranslation.hello')}}
+    
 
   <!-- Scripts -->
   <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>

@@ -23,7 +23,7 @@
 
   img {
       display: block;
-      max-width:230px;
+      max-width:120px;
       max-height:95px;
       width: auto;
       height: auto;
@@ -254,7 +254,7 @@ google.maps.event.addListener(map, 'click', function(event) {
       </ul>
 
       <div class="tab-content">
-        <div class="tab-pane fade"  id="activeProductsTab">
+        <div class="tab-pane fade in active"  id="activeProductsTab">
              <div class = "col-lg-9">
               @foreach($activeProducts as $activeProduct)
                 <a href="{{route('product', [$activeProduct->id])}}">
@@ -279,7 +279,7 @@ google.maps.event.addListener(map, 'click', function(event) {
             </div>
           </div>
 
-        <div class="tab-pane fade in active"  id="Comments">
+        <div class="tab-pane fade"  id="Comments">
 
 
            <div class="modal fade" id="modal-1">
@@ -317,13 +317,13 @@ google.maps.event.addListener(map, 'click', function(event) {
                         </span>Reviews</a>
                     </h4>
                     <div class = "defaultAddComment">
-                        
+                        <p style = 'margin-top:5px;'></p><button type='button' id = 'buttondefault' class='btn btn-primary' data-toggle='modal' data-target='#modal-1'>Create New Review</button>
                     </div>
                   </div>
 
                   <div id="collapseOne" class="panel-collapse collapse in">
                     <ul class="list-group" id = "mainListGroup">
-                    </ul>
+                     </ul>
                   </div>
                 </div>
               </div>

@@ -21,7 +21,7 @@ class CreateReviewsTable extends Migration {
 			$table->timestamp('date')->default(DB::raw('CURRENT_TIMESTAMP'));
 			$table->foreign('fromUser')->references('id')->on('users');
 			$table->foreign('toUser')->references('id')->on('users');
-			$table->integer('grade')->nullable();
+			$table->double('grade')->nullable();
 		});
 	}
 

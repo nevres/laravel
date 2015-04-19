@@ -23,13 +23,13 @@ function publishReview(){
 	}
 	
 function listReviews(){
+	$.getScript("/js/star-rating.js");
 	var parsedReviews = $.parseJSON($('#reviews').text());
 	$(document).ready(function() {
-		console.log(parsedReviews);
-		if(parsedReviews.length == 0)
-			$('.defaultAddComment').append("<p style = 'margin-top:5px;'>There is no reviews for this user</br></p><button type='button' id = 'buttondefault' class='btn btn-primary' data-toggle='modal' data-target='#modal-1'>Create New Comment</button>");
+		var parsedUser = $.parseJSON($('#user').text());
 		for (var i = 0; i < parsedReviews.length; i++) {	
-			$('#mainListGroup').append("<li class='list-group-item'><h4 class='list-group-item-heading'><small> Created by: "+parsedReviews[i].first_name+" "+parsedReviews[i].second_name+" Creation Date: "+parsedReviews[i].date+"</small></h4><p class='list-group-item-text'>"+parsedReviews[i].content+"</p> <ul class= 'list-group' id = 'groupOf"+parsedReviews[i].id+"'></ul></li>");
-		};
+			$('#mainListGroup').append("<li class='list-group-item'><h4 class='list-group-item-heading'><small> Created by: <a href = '/user/"+parsedReviews[i].id+"''>"+parsedReviews[i].first_name+" "+parsedReviews[i].second_name+"</a> Creation Date: "+parsedReviews[i].date+"</small></h4><p class='list-group-item-text'>"+parsedReviews[i].content+
+				"<input id='input-21d' value='"+parsedReviews[i].grade+"' type='number' class='rating' min=0 max=5 step=0.5 data-size='xs' readonly= true showClear= false showCaption = false></p><ul class= 'list-group' id = 'groupOf"+parsedReviews[i].id+"'></ul></li>");
+			};
 	});
 }

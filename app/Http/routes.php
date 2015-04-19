@@ -29,6 +29,7 @@ Route::get('/{category}', ['uses' =>'EmarketController@index2']);
 Route::get('product/{product}', ['as' => 'product', 'uses' => 'EmarketController@productview']);
 
 Route::get('user/{user}', ['as' => 'user', 'uses' => 'EmarketController@userview']);
+Route::get('language/{language}', ['as' => 'language', 'uses' => 'EmarketController@changeLanguage']);
 
 Route::POST('executeSearch', array('uses' => 'EmarketController@executeSearch'));
 Route::POST('addComment', array('uses' => 'EmarketController@addComment'));
