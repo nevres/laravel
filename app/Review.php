@@ -10,7 +10,7 @@ class Review extends Eloquent{
 	public $timestamps = false;
 
 	public static $rules = array(
-		'content'=> 'string|min:15',
+		'content'=> 'string|min:5',
 	);
 
 	public static function validate ($data){

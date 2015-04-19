@@ -8,13 +8,12 @@ function publishReview(){
 
 		var content = $('#reviewMessage').val();
 		var parsedUser = $.parseJSON($('#user').text());
-		var userId = parsedUser.id;
-		var rating = $('#input-21d').val();
+		var toUser = parsedUser.id;
+		var grade = $('#input-21d').val();
 
-		alert("here");
-		console.log("here");
+		console.log(content+toUser+grade);
 		if(content.length > 0){
-			$.post('http://laravel2.dev/addReview', {content: content, userId: userId, rating : rating}, function(result){
+			$.post('http://laravel2.dev/addReview', {content: content, toUser: toUser, grade : grade}, function(result){
 				$('.addSomeText').html(result);
 			});
 		}else{

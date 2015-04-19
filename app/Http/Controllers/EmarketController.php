@@ -123,26 +123,25 @@ class EmarketController extends Controller {
 	public function addReview(){
 
 		$content = Input::get('content');
-		$userId = Input::get('userId');
-		$rating = Input::get('rating');
+		$userId = Input::get('toUser');
+		$grade = Input::get('grade');
 
 		$validationReview = Review::validate(Input::all());
 
-		if($validationComment->fails())
+		if($validationReview->fails())
 			return 'error';
 		else{
 		$reviewData = array(
-				'userFrom' => Auth::user()->id,
-				'userTo' => Input::get('userId'),
+				'fromUser' => Auth::user()->id,
+				'toUser' => Input::get('toUser'),
 				'content' =>Input::get('content'),
-				'rating' =>Input::get('rating'),
+				'grade' =>Input::get('grade'),
 			);
 			$review = new Review($reviewData);
 			$review->save();
 
-			return "<p>Successfully added review</p>";
+			return "Successfully added review";
 		}
-
 	}
 
 

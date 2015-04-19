@@ -297,7 +297,7 @@ google.maps.event.addListener(map, 'click', function(event) {
                  </div>
 
                  <div class="modal-footer">
-                  <button type="submit" class="btn btn-default" onclick = "publishReview();return false;" data-toggle="tooltip" data-placement="top" title="Make a Review">Add a Review</button>
+                  <button type="submit" class="btn btn-default" onclick = "publishReview();return false;" data-toggle="tooltip" data-placement="top" title="Make a Comment">Add a Review</button>
                   <a href="" class="btn btn-default" data-dismiss="modal">Close</a>
                  </div>
               </div>
