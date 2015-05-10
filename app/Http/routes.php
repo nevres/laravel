@@ -34,6 +34,7 @@ Route::get('language/{language}', ['as' => 'language', 'uses' => 'EmarketControl
 Route::POST('executeSearch', array('uses' => 'EmarketController@executeSearch'));
 Route::POST('addComment', array('uses' => 'EmarketController@addComment'));
 Route::POST('addReview', array('uses' => 'EmarketController@addReview'));
+Route::POST('processFilter', array('uses' => 'EmarketController@processFilter'));
 
 Route::get('home', 'HomeController@index');
 

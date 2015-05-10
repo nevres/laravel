@@ -33,7 +33,7 @@
 .navbar-md .navbar-toggle .icon-bar {width: 19px;}
 
 
-    img {
+  img {
       display: block;
       max-width:230px;
       max-height:95px;
@@ -44,16 +44,20 @@
   #search_container
   {
     margin-bottom: 15px;
-
   }
-    a{
-      color: inherit;
-    }
+
+  a{
+    color: inherit;
+  }
+
+  .form-control{
+      margin-bottom: 5px;
+  }
 
 
   </style>
 </head>
-<body>
+<body onload = "setCookie()">
 
   <nav class="navbar navbar-default navbar-fixed-top navbar-md">
     <div class="container-fluid">
@@ -111,7 +115,7 @@
   </div>
 
 
-  <div class = "col-lg-9">
+  <div class = "col-lg-8" id = "filteredResults">
   @foreach($products as $product)
     <a href="{{route('product', [$product->id])}}">
       <div class = "col-lg-3" style = "position:relative; ">
@@ -137,26 +141,99 @@
 </div>
 
 
-<div class = "col-lg-3" style = "float:right">
-      <div class = "list-group">
-        <a href="/" class = "list-group-item active">{{trans('indextranslation.Popular')}}</a>
-        <a href="/0" class = "list-group-item ">@lang('indextranslation.Properties')</a>
-        <a href="/1" class = "list-group-item">@lang('indextranslation.Mobile Phones')</a>
-        <a href="/2" class = "list-group-item">@lang('indextranslation.Computers')</a>
-        <a href="/3" class = "list-group-item">@lang('indextranslation.Clothes')</a>
-        <a href="/4" class = "list-group-item">@lang('indextranslation.Electronics')</a>
-        <a href="/5" class = "list-group-item">@lang('indextranslation.Sport Equipement')</a>
-        <a href="/6" class = "list-group-item">@lang('indextranslation.Art')</a>
-        <a href="/7" class = "list-group-item">@lang('indextranslation.Animals')</a>
-        <a href="/8" class = "list-group-item">@lang('indextranslation.My Home and Gardenn')</a>
-        <a href="/9" class = "list-group-item">@lang('indextranslation.Jewerly and Watches')</a>
-      </div>
-    </div>
+<div class = "col-lg-3" style = "float:left; margin-left: 10px;">
+        
+        <form class="form-horizontal" role="form" method="POST" id = "mainForm" enctype="multipart/form-data">
+
+        <div class="form-group">
+              <div class = "panel panel-primary">
+                <div class = "panel-heading">
+                  Product Filters
+                </div>
+                  <div class = "panel-body">
+                      
+                      <label for="fromPrice" class="col-sm-2 control-label">From</label>
+                        <div class="col-sm-4">
+                          <div class = "input-group">
+                          <div class="input-group-addon">$</div>
+                            <input type="text" class="form-control" id="fromPrice">
+                          </div>
+                        </div>
+                        
+                        <label for="toPrice" class="col-sm-2 control-label">To</label>
+                        <div class="col-sm-4">
+                          <div class = "input-group">
+                            <div class="input-group-addon">$</div>
+                              <input type="text" class="form-control" id="toPrice">
+                            </div>
+                        </div>
+                        
+                        <label for="gradeBiggerThan" class="col-sm-6 control-label">Grade biger than:</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="gradeBiggerThan">
+                        </div>
+
+                        <label for="morePicturesThan" class="col-sm-6 control-label">More pictures than:</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="morePicturesThan">
+                        </div>
+
+                        <div class="col-md-6">
+                        <div class="checkbox">
+                            <input type="checkbox" id="newProducts">New Products
+                        </div>
+                      </div>
+
+                  </div>
+                </div>
+
+                <div class = "panel panel-default">
+                <div class = "panel-heading">
+                  Property Filters
+                </div>
+                 @yield("specificFilter");
+                  </div>
+
+              <div class = "panel panel-default">
+                <div class = "panel-heading">
+                 Sort Results By:
+                </div>
+                  <div class = "panel-body">
+                     <div class = "row">
+                      <div class = "col-md-7">
+                     <select class = "form-control" id = "sortBy">
+                        <option value="price">Price</option>
+                        <option value="grade">Grade</option>
+                        <option value="date">Publishing Date</option>
+                        <option value="rooms">Number of Rooms</option>
+                        <option value="squareMeters">Square Meters</option>
+                        <option value="squareMeters">Square Meters</option>
+                        <option value="rooms">Nearest on the Map</option>
+                      </select>
+                    </div>
+                    <div class = "col-md-5">
+                      <select class = "form-control" id = "sortHow">
+                        <option value="asc">Ascending</option>
+                        <option value="dsc">Descending</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+                  <button type="submit" onclick = "processFilter(); return false;" class="btn btn-primary" style = "float:left;">Apply Filters</button>
+                </div>
+              </div>
+    </form>
+</div>
     
+    <div class = "someText">
+    </div>
 
   <!-- Scripts -->
   <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
   <script src ="{{'js/processResult.js'}}"></script>
+  @yield('filterscript')
 </body>
 </html>

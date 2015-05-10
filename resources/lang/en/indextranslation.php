@@ -1,7 +1,7 @@
 <?php 
 return array(
 	'Language' => 'Language',
-	'Add a Product' => 'Add a Product';
+	'Add a Product' => 'Add a Product',
 	'Posted on' => 'Posted on',
  	'hello' => 'hello',
  	'Price' => 'price',

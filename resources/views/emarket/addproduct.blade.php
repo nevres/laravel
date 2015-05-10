@@ -106,11 +106,22 @@ google.maps.event.addListener(map, 'click', function(event) {
     float:center;
 }
 
+/* Create a medium height at 40px */
+.navbar-md {min-height:40px}
+.navbar-md .navbar-brand,
+.navbar-md .navbar-nav>li>a {padding-top:10px; padding-bottom:10px}
+.navbar-md .navbar-brand {height: 40px}  
+.navbar-md .navbar-toggle {margin: 6px 12px 6px 0px; padding: 6px 7px 6px 7px;}
+.navbar-md .navbar-toggle .icon-bar {width: 19px;}
+
 </style>
 
 </head>
 <body onload="initialize()">
-  <nav class="navbar navbar-default">
+
+
+
+ <nav class="navbar navbar-default navbar-fixed-top navbar-md">
     <div class="container-fluid">
       <div class="navbar-header">
         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -119,12 +130,11 @@ google.maps.event.addListener(map, 'click', function(event) {
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="#">Laravel</a>
       </div>
 
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
-          <li><a href="/">Home</a></li>
+          <li><a href="laravel2.dev">Home</a></li>
         </ul>
 
         <ul class="nav navbar-nav navbar-right">
@@ -136,13 +146,25 @@ google.maps.event.addListener(map, 'click', function(event) {
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ Auth::user()->name }} <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
                 <li><a href="/auth/logout">Logout</a></li>
+                <li><a href = "/user/{{Auth::user()->id}}">My Profile</a></li>
               </ul>
             </li>
+
+            <li class="dropdown">
+              <a href = "#" class = "dropdown-toggle" data-toggle = "dropdown" role = "button" aria-expanded = "false">@lang('indextranslation.Language')<span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                <li><a href="{{route('language', ['en'])}}">English</a></li>
+                <li><a href="{{route('language', ['tr'])}}">Turkish</a></li>
+              </ul>
+            </li>
+
           @endif
         </ul>
       </div>
     </div>
   </nav>
+
+
 <div class = "container">
 
 @if ($errors->has())
@@ -157,7 +179,7 @@ google.maps.event.addListener(map, 'click', function(event) {
       <div class = "col-lg-12">
           <form class="form-horizontal" role="form" method="POST" id = "mainForm" action = "addproduct" enctype="multipart/form-data">
             
-          <ul class="nav nav-pills nav-justified" style = "margin-bottom:25px;">
+          <ul class="nav nav-pills nav-justified" style = "margin-bottom:25px; padding-top:55px;">
             <li class="active"><a href="#mainInformation" data-toggle="tab">Main Information</a></li>
             <li><a href="#detailedInformation" >Detailed Information</a></li>
             <li><a href="#imagesAndMap">Images and Map</a></li>

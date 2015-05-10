@@ -88,6 +88,10 @@ class EmarketController extends Controller {
 				$joinResult = Product::join('computers', 'computers.productId', '=', 'products.id')->where('id', $product)->first();
 				return view('emarket.computerview')->with('product', $joinResult)->with('comments', $comments);
 				break;
+			case '7':
+				$joinResult = Product::join('animals', 'animals.productId', '=', 'products.id')->where('id', $product)->first();
+				return view('emarket.animalview')->with('product', $joinResult)->with('comments', $comments);
+				break;
 
 			default:
 				return 'product nor found';
@@ -150,6 +154,178 @@ class EmarketController extends Controller {
 		}
 	}
 
+
+	public function processFilter(){
+
+		$type = Input::get('type');
+		$fromPrice = Input::get('fromPrice');
+		$toPrice = Input::get('toPrice');
+		$gradeBiggerThan = Input::get('gradeBiggerThan');
+		$morePicturesThan = Input::get('morePicturesThan');
+		$sortBy = Input::get('sortBy');
+		$sortHow = Input::get('sortHow');
+		$newProducts = Input::get('newProducts');
+
+
+		$products = Product::orderBy($sortBy, $sortHow);
+
+		if($type == 'properties'){
+
+
+			$roomNumber = Input::get('roomNumber');
+			$squareMeters= Input::get('squareMeters');
+			$internet = Input::get('internet');
+			$furniture = Input::get('furniture');
+			$telephone = Input::get('telephone');
+			$airConditioning = Input::get('airConditioning');
+			$garden = Input::get('garden');
+
+			if($roomNumber != null)
+				$products = $products->where("rooms", ">=", $roomNumber);
+			if($squareMeters != null)
+				$products = $products->where("squareMeters", ">=", $squareMeters);
+			if($internet == 'true')
+				$products = $products->where("internet", 1);
+			if($furniture == 'true')
+				$products = $products->where("furniture", 1);
+			if($telephone == 'true')
+				$products = $products->where("telephone", 1);
+			if($airConditioning == 'true')
+				$products = $products->where("airConditioning", 1);
+			if($garden == 'true')
+				$products = $products->where("garden", 1);
+
+			$products = $products->join('properties', 'properties.productId', '=', 'products.id')->where('type', 0);
+		
+		}else if($type == "phones"){
+
+			$screenResolution = Input::get('screenResolution');
+			$camera= Input::get('camera');
+			$processorType = Input::get('processorType');
+			$ram = Input::get('ram');
+			$flash = Input::get('flash');
+			$bluetooth = Input::get('bluetooth');
+			$wireless = Input::get('wireless');
+			$headset = Input::get('headset');
+
+			if($screenResolution != null)
+				$products = $products->where("screenResolution", ">=", $screenResolution);
+			if($camera != null)
+				$products = $products->where("camera", ">=", $camera);
+			if($processorType != null)
+				$products = $products->where("processorType", ">=", $processor);
+			if($ram != null)
+				$products = $products->where("ram",">=", $ram);
+			if($flash == 'true')
+				$products = $products->where("flash", 1);
+			if($bluetooth == 'true')
+				$products = $products->where("bluetooth", 1);
+			if($wireless == 'true')
+				$products = $products->where("wireless", 1);
+			if($headset == 'true')
+				$products = $products->where("headset", 1);
+
+			$products = $products->join('phones', 'phones.productId', '=', 'products.id')->where('type', 1);
+		
+		}else if($type == "computers"){
+
+			$brand = Input::get('brand');
+			$productFamily= Input::get('productFamily');
+			$processorType = Input::get('processorType');
+			$processorSpeed = Input::get('processorSpeed');
+
+			$numberCores = Input::get('numberCores');
+			$screenSize= Input::get('screenSize');
+			$os = Input::get('os');
+			$ram = Input::get('ram');
+			$hdd = Input::get('hdd');
+			$ssd = Input::get('ssd');
+
+			$cdRom = Input::get('cdROm');
+			$bluetooth = Input::get('bluetooth');
+			$wireless = Input::get('wireless');
+			$webcam = Input::get('webcam');
+			$hdmi = Input::get('hdmi');
+			
+			if($brand != null)
+				$products = $products->where("brand", "=", $brand);
+			if($productFamily != null)
+				$products = $products->where("productFamily", "=", $productFamily);
+			if($processorType != null)
+				$products = $products->where("processorType", "=", $processorType);
+			if($processorSpeed != null)
+				$products = $products->where("processorSpeed",">=", $processorSpeed);
+			if($numberCores != null)
+				$products = $products->where("numberCores", ">=", $numberCores);
+			if($screenSize != null)
+				$products = $products->where("screenSize", ">=", $screenSize);
+			if($os != null)
+				$products = $products->where("os", ">=", $os);
+			if($ram != null)
+				$products = $products->where("ram",">=", $ram);
+			if($hdd != null)
+				$products = $products->where("hdd", ">=", $hdd);
+			if($ssd != null)
+				$products = $products->where("ssd",">=", $ssd);
+
+			if($cdRom == 'true')
+				$products = $products->where("cdRom", 1);
+			if($bluetooth == 'true')
+				$products = $products->where("bluetooth", 1);
+			if($wireless == 'true')
+				$products = $products->where("wireless", 1);
+			if($webcam == 'true')
+				$products = $products->where("webcam", 1);
+			if($hdmi == 'true')
+				$products = $products->where("hdmi", 1);
+
+
+			$products = $products->join('computers', 'computers.productId', '=', 'products.id')->where('type', 2);
+		}else if($type == "animals"){
+
+			$breed = Input::get('breed');
+			$age= Input::get('age');
+			$gender = Input::get('gender');
+			
+			$vaccine = Input::get('vaccine');
+			$pedigree = Input::get('pedigree');
+			$pureblood = Input::get('pureblood');
+			$puppy = Input::get('puppy');
+			
+			
+			if($breed != null)
+				$products = $products->where("breed", "=", $breed);
+			if($age != null)
+				$products = $products->where("age", "=", $age);
+			if($gender != '-1')
+				$products = $products->where("gender", $gender);
+
+			if($vaccine == 'true')
+				$products = $products->where("vaccine", 1);
+			if($pedigree == 'true')
+				$products = $products->where("pedigree", 1);
+			if($pureblood == 'true')
+				$products = $products->where("pureblood", 1);
+			if($puppy == 'true')
+				$products = $products->where("puppy", 1);
+			
+			$products = $products->join('animals', 'animals.productId', '=', 'products.id')->where('type', 7);
+		}
+
+
+		if($fromPrice != null)
+			$products = $products->where("price", ">=", $fromPrice);
+		if($toPrice != null)
+			$products = $products->where("price", "<=", $toPrice);
+		if($gradeBiggerThan != null)
+			$products = $products->where("grade", ">=", $gradeBiggerThan);
+		if($newProducts == 'true')
+			$products = $products->where("isItNew", 1);
+
+
+		$products = $products->take(10)->get();
+		return View::make('emarket.filteredResults')->with('products', $products);
+	}
 
 	public function addproduct(){
 		return view('emarket.addproduct');
@@ -441,6 +617,13 @@ class EmarketController extends Controller {
 
 	public function index2($category){
 		$products = Product::orderBy('views', 'desc')->where('type', $category)->take(10)->get();
-		return view('emarket.index')->with('products', $products);
+		if($category == 0)
+			return view('emarket.propertyfilter')->with('products', $products);
+		else if($category == 1)
+			return view('emarket.phonefilter')->with('products', $products);
+		else if($category == 2)
+			return view('emarket.computerfilter')->with('products', $products);
+		else if($category == 7)
+			return view('emarket.animalfilter')->with('products', $products);
 	}
 }

@@ -40,12 +40,18 @@
           margin:0 0 0 0;
   }
   ul li {     
-          list-style:none;
-          margin-bottom:25px;           
+          list-style:none;      
       }
   ul li img {
           cursor: pointer;
       }
+
+  .navbar-md {min-height:40px !important;}
+  .navbar-md .navbar-brand,
+  .navbar-md .navbar-nav>li>a {padding-top:10px !important; padding-bottom:10px !important;}
+  .navbar-md .navbar-brand {height: 40px !important;}  
+  .navbar-md .navbar-toggle {margin: 6px 12px 6px 0px !important; padding: 6px 7px 6px 7px !important;}
+  .navbar-md .navbar-toggle .icon-bar {width: 19px !important;}
 
   #search_container
   {
@@ -61,6 +67,16 @@
     height: auto;
     max-width:300px;
     max-height:270px;
+  }
+
+  #logoImage{
+
+    display: block;
+    max-width:230px;
+    max-height:95px;
+    width: auto;
+    height: auto;
+  
   }
 
   .img-responsive{
@@ -80,6 +96,7 @@
   #map-canvas img{
     max-width: none;
   }
+
 
   </style>
 
@@ -166,7 +183,26 @@ google.maps.event.addListener(map, 'click', function(event) {
 </head>
 
 <body onload="onLoadFunction()" >
-  <nav class="navbar navbar-default">
+  
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '664591343644968',
+      xfbml      : true,
+      version    : 'v2.3'
+    });
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>
+
+<nav class="navbar navbar-default navbar-fixed-top navbar-md">
     <div class="container-fluid">
       <div class="navbar-header">
         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -175,7 +211,6 @@ google.maps.event.addListener(map, 'click', function(event) {
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="#">Laravel</a>
       </div>
 
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -192,26 +227,36 @@ google.maps.event.addListener(map, 'click', function(event) {
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ Auth::user()->name }} <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
                 <li><a href="/auth/logout">Logout</a></li>
+                <li><a href = "/user/{{Auth::user()->id}}">My Profile</a></li>
               </ul>
             </li>
+
+            <li class="dropdown">
+              <a href = "#" class = "dropdown-toggle" data-toggle = "dropdown" role = "button" aria-expanded = "false">@lang('indextranslation.Language')<span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                <li><a href="{{route('language', ['en'])}}">English</a></li>
+                <li><a href="{{route('language', ['tr'])}}">Turkish</a></li>
+              </ul>
+            </li>
+
           @endif
         </ul>
       </div>
     </div>
   </nav>
-    
-
 
   <div class = "container" id = "search_container">
-    <div class="navbar-form navbar-left" role="search">
-        <form class="form-group">
-          <input type="text" class="form-control" autocomplete="off"  placeholder="Search for product. Example: iPhone 6" style = "width:400px" onkeyup = "up()" onkeydown= "down()" id ="searchInput" >
+    <div class="navbar-form navbar-left" role="search" style = "padding-top:45px;">
+    <img id = "logoImage" src="/img/Emarket-logo.png" style ="display:inline;">
+        <form class="form-group" style = "padding-left: 25px;">
+          <input type="text" class="form-control" autocomplete="off"  placeholder="Search for product. Example: iPhone 6" style = "width:400px;" onkeyup = "up()" onkeydown= "down()" id ="searchInput" >
           <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
       </form>
-    <a href="/addproduct"><button type="submit" class="btn btn-primary" style = "margin-left:35px">Add a Product</button></a>
+    <a href="/addproduct"><button type="submit" class="btn btn-primary" style = "margin-left:35px">{{trans('indextranslation.Add a Product')}}</button></a>
     <p id = "searchResult"></p>
     </div>
   </div>
+  
 
 <div class = "row">
   <div class = "container">
@@ -223,15 +268,21 @@ google.maps.event.addListener(map, 'click', function(event) {
   <div class = "col-lg-9" style = "padding-left: 40px; padding-bottom : 30px;">
     <div class = "panel panel-default panel-danger">
       <div class = "panel-heading">
-       <h4>{{$product->name}}</br><small>Poseted on {{substr($product->date, 0, 10)}}</small></h4>
+       <h4>{{$product->name}}</br><small>@lang('producttranslation.Posted on') {{substr($product->date, 0, 10)}}</small></h4>
       </div>
     <div class = "panel-body">
-      <p><b>Price:</b> {{$product->price}}</br>
-         <b>Views:</b> {{$product->views}}</br>
-         <a href = "/user/{{$product->userId}}"><b>UserId:</b> {{$product->userId}}</br></a>
-         <b>Is It New:</b> <b class="glyphicon glyphicon-ok" id = "glyphiconOK"></b><b class="glyphicon glyphicon-remove" id = "glyphiconRemove"></b>
-         </br><b>Short Description:</b> {{$product->shortDesc}}
+      <p><b>@lang('producttranslation.Price'):</b> {{$product->price}}</br>
+         <b>@lang('producttranslation.Views'):</b> {{$product->views}}</br>
+         <a href = "/user/{{$product->userId}}"><b>@lang('producttranslation.User Id'):</b> {{$product->userId}}</br></a>
+         <b>@lang('producttranslation.Is It New'):</b> <b class="glyphicon glyphicon-ok" id = "glyphiconOK"></b><b class="glyphicon glyphicon-remove" id = "glyphiconRemove"></b>
+         </br><b>@lang('producttranslation.Short Description'):</b> {{$product->shortDesc}}
          <p id= "products" style = "font-size:0;"><?php echo json_encode($product); ?></p>
+        <div
+  class="fb-like"
+  data-share="true"
+  data-width="450"
+  data-show-faces="true">
+</div>
         </br>
        </p>
     </div>
@@ -243,7 +294,7 @@ google.maps.event.addListener(map, 'click', function(event) {
 <div class="container">
   <ul class="row">
     <div class="panel panel-default">
-      <div class="panel-heading"><h3 class="panel-title">Images for an item</h3></div>
+      <div class="panel-heading"><h3 class="panel-title">@lang('producttranslation.Images for an item')</h3></div>
       <div class="panel-body">
         <div class = "pictureContainer"></div>
       </div> 
@@ -265,9 +316,9 @@ google.maps.event.addListener(map, 'click', function(event) {
 
 <div class="container">
       <ul class="nav nav-pills nav-justified" style = "padding-bottom: 20px;">
-        <li><a href="#Home" data-toggle="tab">Details about product</a></li>
-        <li class="active"><a href="#Comments" data-toggle="tab">Comments</a></li>
-        <li><a href="#Map" data-toggle="tab">Map</a></li>
+        <li><a href="#Home" data-toggle="tab">@lang('producttranslation.Details about product')</a></li>
+        <li class="active"><a href="#Comments" data-toggle="tab">@lang('producttranslation.Comments')</a></li>
+        <li><a href="#Map" data-toggle="tab">@lang('producttranslation.Map')</a></li>
       </ul>
 
       <div class="tab-content">
