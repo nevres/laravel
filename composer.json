@@ -28,17 +28,17 @@
 	},
 	"scripts": {
 		"post-install-cmd": [
-			"php artisan clear-compiled",
-			"php artisan optimize"
-		],
-		"post-update-cmd": [
-			"php artisan clear-compiled",
-			"php artisan optimize"
-		],
-		"post-create-project-cmd": [
-			"php -r \"copy('.env.example', '.env');\"",
-			"php artisan key:generate"
-		]
+        "$_ artisan optimize"
+    ],
+    "pre-update-cmd": [
+        "$_ artisan clear-compiled"
+    ],
+    "post-update-cmd": [
+        "$_ artisan optimize"
+    ],
+    "post-create-project-cmd": [
+        "$_ artisan key:generate"
+    ]
 	},
 	"config": {
 		"preferred-install": "dist"

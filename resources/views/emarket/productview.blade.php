@@ -179,7 +179,6 @@ google.maps.event.addListener(map, 'click', function(event) {
 
 </script>
 
-
 </head>
 
 <body onload="onLoadFunction()" >
